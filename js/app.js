@@ -396,7 +396,8 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Mobile menu toggle
-    document.getElementById('menuToggle').addEventListener('click', () => {
+    document.getElementById('menuToggle').addEventListener('click', (e) => {
+        e.stopPropagation();
         document.getElementById('sidebar').classList.toggle('open');
         document.getElementById('sidebarOverlay').classList.toggle('active');
     });

@@ -1,4 +1,4 @@
-const CACHE_NAME = 'dta-v3';
+const CACHE_NAME = 'dta-v4';
 const ASSETS = [
   './',
   './index.html',

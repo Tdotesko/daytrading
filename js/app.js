@@ -396,11 +396,15 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Mobile menu toggle
-    document.getElementById('menuToggle').addEventListener('click', (e) => {
+    const menuBtn = document.getElementById('menuToggle');
+    function toggleMenu(e) {
+        e.preventDefault();
         e.stopPropagation();
         document.getElementById('sidebar').classList.toggle('open');
         document.getElementById('sidebarOverlay').classList.toggle('active');
-    });
+    }
+    menuBtn.addEventListener('click', toggleMenu);
+    menuBtn.addEventListener('touchend', toggleMenu);
 
     // Close sidebar on content or overlay click (mobile)
     document.getElementById('content').addEventListener('click', () => {

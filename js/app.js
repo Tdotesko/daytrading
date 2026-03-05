@@ -32,7 +32,12 @@ function navigateTo(moduleId) {
     const content = MODULE_CONTENT[moduleId];
     if (!content) return;
 
-    document.getElementById('moduleContent').innerHTML = content;
+    // Re-trigger fade-in animation
+    const mc = document.getElementById('moduleContent');
+    mc.style.animation = 'none';
+    mc.offsetHeight; // force reflow
+    mc.style.animation = '';
+    mc.innerHTML = content;
 
     // Update active nav
     document.querySelectorAll('.nav-item').forEach(item => {
@@ -104,7 +109,9 @@ function updateCompletionButtons(moduleId) {
     if (btn) {
         if (completedModules.includes(moduleId)) {
             btn.classList.add('completed');
+            btn.classList.add('just-completed');
             btn.textContent = 'Completed ✓ (click to undo)';
+            setTimeout(() => btn.classList.remove('just-completed'), 500);
         } else {
             btn.classList.remove('completed');
             btn.textContent = `Mark Module Complete ✓`;
@@ -403,6 +410,21 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('sidebar').classList.remove('open');
         document.getElementById('sidebarOverlay').classList.remove('active');
     });
+
+    // Back-to-top button
+    const backToTop = document.getElementById('backToTop');
+    if (backToTop) {
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 400) {
+                backToTop.classList.add('visible');
+            } else {
+                backToTop.classList.remove('visible');
+            }
+        });
+        backToTop.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    }
 
     // Load last module or welcome
     const lastModule = localStorage.getItem('dtaCurrentModule') || 'welcome';

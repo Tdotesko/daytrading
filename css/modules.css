@@ -615,3 +615,81 @@
 
 .journal-entry .pnl-positive { color: var(--accent); }
 .journal-entry .pnl-negative { color: var(--red); }
+
+/* ===== INLINE DIAGRAMS ===== */
+.diagram {
+    text-align: center;
+    margin: 24px 0;
+    padding: 20px 16px;
+    background: rgba(17, 24, 39, 0.5);
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    overflow-x: auto;
+}
+
+.diagram svg {
+    max-width: 100%;
+    height: auto;
+}
+
+.diagram .caption {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-top: 12px;
+    font-style: italic;
+}
+
+/* ===== PAGE TRANSITIONS ===== */
+#moduleContent {
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* ===== BACK TO TOP ===== */
+.back-to-top {
+    position: fixed;
+    bottom: 32px;
+    right: 32px;
+    width: 44px;
+    height: 44px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    color: var(--accent);
+    font-size: 1.2rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s;
+    z-index: 50;
+}
+
+.back-to-top.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+.back-to-top:hover {
+    background: var(--accent);
+    color: var(--bg-dark);
+    border-color: var(--accent);
+    transform: translateY(-2px);
+}
+
+/* ===== MODULE COMPLETE ANIMATION ===== */
+.module-complete-btn.just-completed {
+    animation: completePulse 0.5s ease;
+}
+
+@keyframes completePulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.03); }
+    100% { transform: scale(1); }
+}

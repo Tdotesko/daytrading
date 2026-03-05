@@ -1,5 +1,5 @@
 // ============================================================
-// Quiz Engine - 25 questions covering all modules
+// Quiz Engine - 30 questions covering all modules
 // ============================================================
 
 const QUIZ_DATA = [
@@ -252,6 +252,61 @@ const QUIZ_DATA = [
         ],
         correct: 1,
         explain: "Form 6781 is the IRS form for reporting gains/losses on Section 1256 contracts, which includes regulated futures. It enables the 60/40 tax split and allows 3-year loss carryback — a significant advantage over stock trading."
+    },
+    {
+        q: "What does the NYSE $TICK index measure, and what does a reading of +1000 indicate?",
+        options: [
+            "The price of the most active stock — +1000 means it costs $1,000",
+            "The number of stocks ticking up minus stocks ticking down — +1000 means extreme broad buying pressure across nearly all NYSE stocks",
+            "The number of trades per second — +1000 means high-frequency trading is active",
+            "The VIX divided by 10 — +1000 means extreme fear"
+        ],
+        correct: 1,
+        explain: "$TICK = (stocks ticking up) minus (stocks ticking down) on the NYSE. A reading of +1000 means nearly every stock is being bought simultaneously — extreme bullish breadth. Professional ES traders use $TICK as a filter: only take longs when $TICK supports bullish breadth, shorts when bearish."
+    },
+    {
+        q: "What is the VIX, and what does a VIX reading above 35 suggest?",
+        options: [
+            "A stock index — above 35 means the market is overvalued",
+            "A volatility measure — above 35 means extreme fear and panic, with large unpredictable price swings",
+            "A trading volume indicator — above 35 means very high participation",
+            "A momentum oscillator — above 35 means overbought"
+        ],
+        correct: 1,
+        explain: "The VIX (CBOE Volatility Index) measures expected S&P 500 volatility over the next 30 days. Above 35 is panic territory (COVID crash hit 82). VIX and ES move inversely ~80% of the time. High VIX means wider stops needed and beginners should reduce size or sit out."
+    },
+    {
+        q: "Small gaps (3-12 points on ES) that are NOT driven by major news tend to:",
+        options: [
+            "Always continue in the gap direction",
+            "Fill approximately 70% of the time during the first 2 hours",
+            "Have no predictable behavior",
+            "Cause the market to close early"
+        ],
+        correct: 1,
+        explain: "Small, non-news-driven gaps tend to fill (price returns to the prior day's close) about 70% of the time in the first 2 hours. This creates the Gap Fill Fade setup. Large gaps (>1%) driven by news often do NOT fill and continue — never blindly fade a large gap."
+    },
+    {
+        q: "What is a bracket order (OCO), and why should you use one on every trade?",
+        options: [
+            "An order that buys two different contracts simultaneously — for diversification",
+            "An order that places your entry, stop-loss, and profit target as one package — so you're never in a position without a stop",
+            "An order that only works during market hours — to prevent overnight positions",
+            "An order that doubles your position if the first trade wins — for compounding"
+        ],
+        correct: 1,
+        explain: "A bracket (OCO - One Cancels Other) order places your entry, stop-loss, AND target simultaneously. When one exit triggers, the other cancels. This ensures you NEVER enter a trade without a stop-loss already placed — eliminating the dangerous gap between entry and stop placement."
+    },
+    {
+        q: "When trailing a stop using the swing structure method in a long trade, where do you move your stop?",
+        options: [
+            "A fixed number of ticks below the current price at all times",
+            "To just below the most recent higher swing low as new swings form",
+            "To the entry price after any profit is shown",
+            "To the previous day's low"
+        ],
+        correct: 1,
+        explain: "The swing structure trail moves your stop to just below the most recent swing low (for longs). In a healthy uptrend, each new higher low represents where buyers stepped in. Your stop sits below real buying activity — if that level breaks, the trend may be reversing, which is when you want to exit."
     }
 ];
 

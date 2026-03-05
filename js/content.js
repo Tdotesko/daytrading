@@ -25,6 +25,11 @@ welcome: `
     <h2>Your Learning Roadmap</h2>
     <div class="roadmap">
         <div class="roadmap-phase">
+            <div class="phase-num">0</div>
+            <h3>Before You Begin</h3>
+            <p>The absolute basics — markets, stocks, indexes, and key vocabulary</p>
+        </div>
+        <div class="roadmap-phase">
             <div class="phase-num">1</div>
             <h3>Foundations</h3>
             <p>What futures are, how markets work, contracts, margin, and broker setup</p>
@@ -72,7 +77,7 @@ welcome: `
 // ============================================================
 module0: `
 <div class="module-header">
-    <span class="phase-tag phase1">Phase 0: Before You Begin</span>
+    <span class="phase-tag phase0">Phase 0: Before You Begin</span>
     <h1>The Absolute Basics</h1>
     <p class="subtitle">If you've never traded anything — stocks, crypto, nothing — start here. This explains the concepts every other module assumes you know.</p>
 </div>
@@ -493,6 +498,41 @@ module2: `
 <div class="info-box warning">
     <div class="box-title">Beginner Rule</div>
     <p><strong>Do NOT trade during FOMC days, CPI releases, or Non-Farm Payrolls until you have 3+ months of sim experience.</strong> These events can blow through your stop-loss before your order executes. The slippage alone can be 5-20 ticks.</p>
+</div>
+
+<div class="content-section">
+    <h2>Gaps — What They Are and Why They Matter</h2>
+    <p>A <strong>gap</strong> occurs when the market opens at a significantly different price than where it closed. In futures, gaps happen most visibly between Friday's close and Sunday's open (weekend gap), or when the 6 PM ET session opens differently from the 5 PM close due to overseas news.</p>
+
+    <h3>Types of Gaps</h3>
+    <table class="data-table">
+        <thead>
+            <tr><th>Gap Type</th><th>Description</th><th>What Usually Happens</th></tr>
+        </thead>
+        <tbody>
+            <tr><td><strong>Gap Up</strong></td><td>Opens above prior close/high</td><td>If gap is small (&lt;0.5%), often fills (price returns to prior close). If gap is large (&gt;1%), may be a "gap and go" — price continues in the gap direction.</td></tr>
+            <tr><td><strong>Gap Down</strong></td><td>Opens below prior close/low</td><td>Same logic. Small gaps tend to fill. Large gaps driven by news may continue.</td></tr>
+            <tr><td><strong>True Gap</strong></td><td>Opens beyond the entire prior day's range (above PDH or below PDL)</td><td>Most significant. Often signals a major shift in sentiment. ~30% fill rate on true gaps — most continue in the gap direction.</td></tr>
+            <tr><td><strong>Gap Fill</strong></td><td>Price returns to the prior day's close, "filling" the gap</td><td>Small gaps fill ~70% of the time during the first 2 hours. This is a tradeable pattern.</td></tr>
+        </tbody>
+    </table>
+
+    <h3>Gap Fill Strategy (Beginner-Friendly)</h3>
+    <p>When ES opens with a small gap (2-10 points from prior close), there's a statistical tendency for it to fill during the morning session. Here's how to think about it:</p>
+    <div class="formula-block">
+        GAP FILL TRADE LOGIC:<br><br>
+        ES closed yesterday at 5,200. Opens today at 5,208 (8-point gap up).<br>
+        No major news catalyst. $TICK opens neutral. VIX unchanged.<br><br>
+        Hypothesis: The gap will fill — price will return to 5,200.<br>
+        Wait for: A rejection candle near the open (shooting star, bearish engulfing)<br>
+        If confirmed: Short with stop above the opening high, target 5,200 (gap fill)<br><br>
+        DO NOT trade gap fills on: CPI/NFP mornings, FOMC days, gaps larger than 1%,<br>
+        or gaps that open beyond the prior day's entire range (true gaps).
+    </div>
+    <div class="info-box warning">
+        <div class="box-title">Gap Trading Caution</div>
+        <p>Gap fills are NOT guaranteed. Large gaps driven by overnight news (earnings, geopolitics, economic data) often do NOT fill and instead become "gap and go" moves that run all day. <strong>Never blindly fade (trade against) a large gap.</strong> Wait for confirmation. If the first 15 minutes show continuation in the gap direction with strong volume, the gap is likely a "gap and go" — trade WITH it, not against it.</p>
+    </div>
 </div>
 
 <div class="content-section">
@@ -930,14 +970,43 @@ module5: `
 <div class="content-section">
     <h2>Anatomy of a Candlestick</h2>
     <p>Each candlestick represents price action over a fixed time period (e.g., 5 minutes on a 5-min chart).</p>
-    <div class="formula-block">
-        BULLISH (Green/White) Candle:          BEARISH (Red) Candle:<br>
-        <br>
-            |  ← Upper Wick (High)                |  ← Upper Wick (High)<br>
-           ┌┴┐ ← Close                           ┌┴┐ ← Open<br>
-           │ │    (Body)                          │ │    (Body)<br>
-           └┬┘ ← Open                            └┬┘ ← Close<br>
-            |  ← Lower Wick (Low)                 |  ← Lower Wick (Low)<br>
+    <div class="diagram">
+        <svg viewBox="0 0 460 300" xmlns="http://www.w3.org/2000/svg" style="max-width:460px;width:100%">
+            <!-- Bullish Candle -->
+            <line x1="115" y1="25" x2="115" y2="75" stroke="#00d4aa" stroke-width="2.5"/>
+            <rect x="90" y="75" width="50" height="130" fill="#00d4aa" rx="3"/>
+            <line x1="115" y1="205" x2="115" y2="270" stroke="#00d4aa" stroke-width="2.5"/>
+            <!-- Bullish Labels -->
+            <text x="115" y="16" fill="#94a3b8" text-anchor="middle" font-size="11" font-family="sans-serif">HIGH</text>
+            <line x1="142" y1="75" x2="165" y2="75" stroke="#64748b" stroke-width="0.8"/>
+            <text x="168" y="79" fill="#e2e8f0" font-size="11" font-family="sans-serif">Close</text>
+            <line x1="142" y1="205" x2="165" y2="205" stroke="#64748b" stroke-width="0.8"/>
+            <text x="168" y="209" fill="#e2e8f0" font-size="11" font-family="sans-serif">Open</text>
+            <text x="115" y="286" fill="#94a3b8" text-anchor="middle" font-size="11" font-family="sans-serif">LOW</text>
+            <text x="115" y="145" fill="#0a0e17" text-anchor="middle" font-size="13" font-weight="bold" font-family="sans-serif">BODY</text>
+            <!-- Bullish wick labels -->
+            <text x="55" y="52" fill="#64748b" font-size="10" text-anchor="end" font-family="sans-serif">Upper</text>
+            <text x="55" y="63" fill="#64748b" font-size="10" text-anchor="end" font-family="sans-serif">Wick</text>
+            <line x1="58" y1="55" x2="112" y2="50" stroke="#64748b" stroke-width="0.5" stroke-dasharray="3,2"/>
+            <text x="55" y="235" fill="#64748b" font-size="10" text-anchor="end" font-family="sans-serif">Lower</text>
+            <text x="55" y="246" fill="#64748b" font-size="10" text-anchor="end" font-family="sans-serif">Wick</text>
+            <line x1="58" y1="238" x2="112" y2="240" stroke="#64748b" stroke-width="0.5" stroke-dasharray="3,2"/>
+            <text x="115" y="298" fill="#00d4aa" text-anchor="middle" font-size="14" font-weight="700" font-family="sans-serif">BULLISH</text>
+
+            <!-- Bearish Candle -->
+            <line x1="345" y1="25" x2="345" y2="75" stroke="#ff4757" stroke-width="2.5"/>
+            <rect x="320" y="75" width="50" height="130" fill="#ff4757" rx="3"/>
+            <line x1="345" y1="205" x2="345" y2="270" stroke="#ff4757" stroke-width="2.5"/>
+            <!-- Bearish Labels -->
+            <text x="345" y="16" fill="#94a3b8" text-anchor="middle" font-size="11" font-family="sans-serif">HIGH</text>
+            <line x1="372" y1="75" x2="395" y2="75" stroke="#64748b" stroke-width="0.8"/>
+            <text x="398" y="79" fill="#e2e8f0" font-size="11" font-family="sans-serif">Open</text>
+            <line x1="372" y1="205" x2="395" y2="205" stroke="#64748b" stroke-width="0.8"/>
+            <text x="398" y="209" fill="#e2e8f0" font-size="11" font-family="sans-serif">Close</text>
+            <text x="345" y="286" fill="#94a3b8" text-anchor="middle" font-size="11" font-family="sans-serif">LOW</text>
+            <text x="345" y="145" fill="#e2e8f0" text-anchor="middle" font-size="13" font-weight="bold" font-family="sans-serif">BODY</text>
+            <text x="345" y="298" fill="#ff4757" text-anchor="middle" font-size="14" font-weight="700" font-family="sans-serif">BEARISH</text>
+        </svg>
     </div>
     <ul>
         <li><strong>Open:</strong> Price at the start of the period.</li>
@@ -966,6 +1035,36 @@ module5: `
         </tbody>
     </table>
 
+    <div class="diagram">
+        <svg viewBox="0 0 560 220" xmlns="http://www.w3.org/2000/svg" style="max-width:560px;width:100%">
+            <!-- Hammer -->
+            <line x1="70" y1="40" x2="70" y2="60" stroke="#00d4aa" stroke-width="2"/>
+            <rect x="55" y="60" width="30" height="30" fill="#00d4aa" rx="2"/>
+            <line x1="70" y1="90" x2="70" y2="170" stroke="#00d4aa" stroke-width="2"/>
+            <text x="70" y="195" fill="#00d4aa" text-anchor="middle" font-size="12" font-weight="600" font-family="sans-serif">Hammer</text>
+            <text x="70" y="210" fill="#64748b" text-anchor="middle" font-size="9" font-family="sans-serif">Bullish reversal</text>
+
+            <!-- Shooting Star -->
+            <line x1="210" y1="40" x2="210" y2="120" stroke="#ff4757" stroke-width="2"/>
+            <rect x="195" y="120" width="30" height="30" fill="#ff4757" rx="2"/>
+            <line x1="210" y1="150" x2="210" y2="170" stroke="#ff4757" stroke-width="2"/>
+            <text x="210" y="195" fill="#ff4757" text-anchor="middle" font-size="12" font-weight="600" font-family="sans-serif">Shooting Star</text>
+            <text x="210" y="210" fill="#64748b" text-anchor="middle" font-size="9" font-family="sans-serif">Bearish reversal</text>
+
+            <!-- Doji -->
+            <line x1="350" y1="40" x2="350" y2="100" stroke="#94a3b8" stroke-width="2"/>
+            <rect x="335" y="100" width="30" height="4" fill="#94a3b8" rx="1"/>
+            <line x1="350" y1="104" x2="350" y2="170" stroke="#94a3b8" stroke-width="2"/>
+            <text x="350" y="195" fill="#94a3b8" text-anchor="middle" font-size="12" font-weight="600" font-family="sans-serif">Doji</text>
+            <text x="350" y="210" fill="#64748b" text-anchor="middle" font-size="9" font-family="sans-serif">Indecision</text>
+
+            <!-- Marubozu -->
+            <rect x="475" y="40" width="30" height="130" fill="#00d4aa" rx="2"/>
+            <text x="490" y="195" fill="#00d4aa" text-anchor="middle" font-size="12" font-weight="600" font-family="sans-serif">Marubozu</text>
+            <text x="490" y="210" fill="#64748b" text-anchor="middle" font-size="9" font-family="sans-serif">Total conviction</text>
+        </svg>
+    </div>
+
     <h3>Multi-Candle Patterns</h3>
     <table class="data-table">
         <thead>
@@ -978,6 +1077,38 @@ module5: `
             <tr><td><strong>Three White Soldiers</strong></td><td>Three consecutive green candles, each closing higher</td><td>Strong bullish momentum. Trend continuation.</td></tr>
         </tbody>
     </table>
+
+    <div class="diagram">
+        <svg viewBox="0 0 500 220" xmlns="http://www.w3.org/2000/svg" style="max-width:500px;width:100%">
+            <!-- Bullish Engulfing -->
+            <text x="125" y="20" fill="#e2e8f0" text-anchor="middle" font-size="13" font-weight="600" font-family="sans-serif">Bullish Engulfing</text>
+            <!-- Small red candle -->
+            <line x1="95" y1="45" x2="95" y2="65" stroke="#ff4757" stroke-width="2"/>
+            <rect x="82" y="65" width="26" height="55" fill="#ff4757" rx="2"/>
+            <line x1="95" y1="120" x2="95" y2="145" stroke="#ff4757" stroke-width="2"/>
+            <!-- Large green candle engulfing -->
+            <line x1="145" y1="35" x2="145" y2="50" stroke="#00d4aa" stroke-width="2"/>
+            <rect x="128" y="50" width="34" height="80" fill="#00d4aa" rx="2"/>
+            <line x1="145" y1="130" x2="145" y2="155" stroke="#00d4aa" stroke-width="2"/>
+            <!-- Arrow -->
+            <text x="125" y="180" fill="#00d4aa" text-anchor="middle" font-size="20" font-family="sans-serif">&#x2191;</text>
+            <text x="125" y="200" fill="#00d4aa" text-anchor="middle" font-size="11" font-family="sans-serif">Bullish reversal</text>
+
+            <!-- Bearish Engulfing -->
+            <text x="375" y="20" fill="#e2e8f0" text-anchor="middle" font-size="13" font-weight="600" font-family="sans-serif">Bearish Engulfing</text>
+            <!-- Small green candle -->
+            <line x1="345" y1="55" x2="345" y2="75" stroke="#00d4aa" stroke-width="2"/>
+            <rect x="332" y="75" width="26" height="55" fill="#00d4aa" rx="2"/>
+            <line x1="345" y1="130" x2="345" y2="150" stroke="#00d4aa" stroke-width="2"/>
+            <!-- Large red candle engulfing -->
+            <line x1="395" y1="40" x2="395" y2="55" stroke="#ff4757" stroke-width="2"/>
+            <rect x="378" y="55" width="34" height="80" fill="#ff4757" rx="2"/>
+            <line x1="395" y1="135" x2="395" y2="160" stroke="#ff4757" stroke-width="2"/>
+            <!-- Arrow -->
+            <text x="375" y="180" fill="#ff4757" text-anchor="middle" font-size="20" font-family="sans-serif">&#x2193;</text>
+            <text x="375" y="200" fill="#ff4757" text-anchor="middle" font-size="11" font-family="sans-serif">Bearish reversal</text>
+        </svg>
+    </div>
 </div>
 
 <div class="info-box fact">
@@ -1002,13 +1133,40 @@ module5: `
 <div class="content-section">
     <h2>Worked Example: Reading a 3-Candle Sequence</h2>
     <p>Let's read a real sequence step by step, like reading a story:</p>
-    <div class="formula-block">
-        CANDLE 1: Big green body, tiny wicks<br>
-        → Strong buyers. Price moved up with conviction. No significant pushback from sellers.<br><br>
-        CANDLE 2: Small body (red or green), wicks on both sides (doji-ish)<br>
-        → Pause. The market is catching its breath. Sellers tested but couldn't reverse. Buyers tested but couldn't push higher. Indecision after a strong move.<br><br>
-        CANDLE 3: Big green body, closes above Candle 1's high<br>
-        → Buyers are back. The pause was just a rest, not a reversal. This is a CONTINUATION pattern. The uptrend is likely to keep going.
+
+    <div class="diagram">
+        <svg viewBox="0 0 460 230" xmlns="http://www.w3.org/2000/svg" style="max-width:460px;width:100%">
+            <!-- Candle 1: Big green, tiny wicks -->
+            <line x1="90" y1="45" x2="90" y2="55" stroke="#00d4aa" stroke-width="2"/>
+            <rect x="72" y="55" width="36" height="100" fill="#00d4aa" rx="2"/>
+            <line x1="90" y1="155" x2="90" y2="165" stroke="#00d4aa" stroke-width="2"/>
+            <text x="90" y="185" fill="#00d4aa" text-anchor="middle" font-size="11" font-weight="600" font-family="sans-serif">Candle 1</text>
+            <text x="90" y="200" fill="#64748b" text-anchor="middle" font-size="9" font-family="sans-serif">Strong buyers</text>
+
+            <!-- Candle 2: Small doji-ish, wicks both sides -->
+            <line x1="230" y1="50" x2="230" y2="85" stroke="#94a3b8" stroke-width="2"/>
+            <rect x="216" y="85" width="28" height="15" fill="#94a3b8" rx="1"/>
+            <line x1="230" y1="100" x2="230" y2="135" stroke="#94a3b8" stroke-width="2"/>
+            <text x="230" y="185" fill="#94a3b8" text-anchor="middle" font-size="11" font-weight="600" font-family="sans-serif">Candle 2</text>
+            <text x="230" y="200" fill="#64748b" text-anchor="middle" font-size="9" font-family="sans-serif">Pause / indecision</text>
+
+            <!-- Candle 3: Big green, closes above Candle 1 high -->
+            <line x1="370" y1="20" x2="370" y2="35" stroke="#00d4aa" stroke-width="2"/>
+            <rect x="352" y="35" width="36" height="110" fill="#00d4aa" rx="2"/>
+            <line x1="370" y1="145" x2="370" y2="155" stroke="#00d4aa" stroke-width="2"/>
+            <text x="370" y="185" fill="#00d4aa" text-anchor="middle" font-size="11" font-weight="600" font-family="sans-serif">Candle 3</text>
+            <text x="370" y="200" fill="#64748b" text-anchor="middle" font-size="9" font-family="sans-serif">Buyers return</text>
+
+            <!-- Candle 1 high reference line -->
+            <line x1="108" y1="45" x2="352" y2="45" stroke="#64748b" stroke-width="0.5" stroke-dasharray="3,3"/>
+            <text x="228" y="40" fill="#64748b" text-anchor="middle" font-size="8" font-family="sans-serif">Candle 1 high</text>
+
+            <!-- Arrows between candles -->
+            <text x="160" y="110" fill="#64748b" font-size="18" font-family="sans-serif">&#x2192;</text>
+            <text x="300" y="110" fill="#64748b" font-size="18" font-family="sans-serif">&#x2192;</text>
+
+            <text x="230" y="225" fill="#00d4aa" text-anchor="middle" font-size="11" font-weight="600" font-family="sans-serif">BULLISH CONTINUATION</text>
+        </svg>
     </div>
     <p><strong>The story:</strong> Buyers charged forward (candle 1), paused to rest (candle 2), then charged again (candle 3). If you were waiting for a pullback entry in an uptrend, candle 2 was your opportunity. Candle 3 confirms it.</p>
     <p><strong>Now flip it:</strong> Big red → small doji → big red = bearish continuation. Same story, sellers in control.</p>
@@ -1052,6 +1210,34 @@ module6: `
     <p><strong>Support:</strong> A price level where buying pressure has historically been strong enough to stop price from falling further. Think of it as a floor.</p>
     <p><strong>Resistance:</strong> A price level where selling pressure has historically been strong enough to stop price from rising further. Think of it as a ceiling.</p>
     <p>These levels exist because traders have memory. If the S&P bounced at 5,150 three times last week, thousands of traders have that level on their charts. When price approaches 5,150 again, they will act — creating a self-fulfilling prophecy.</p>
+
+    <div class="diagram">
+        <svg viewBox="0 0 560 260" xmlns="http://www.w3.org/2000/svg" style="max-width:560px;width:100%">
+            <!-- Resistance zone -->
+            <rect x="40" y="30" width="480" height="18" fill="#ff475715" rx="3"/>
+            <line x1="40" y1="39" x2="520" y2="39" stroke="#ff4757" stroke-width="1.5" stroke-dasharray="6,4"/>
+            <text x="530" y="43" fill="#ff4757" font-size="11" font-weight="600" font-family="sans-serif">Resistance</text>
+
+            <!-- Support zone -->
+            <rect x="40" y="195" width="480" height="18" fill="#00d4aa15" rx="3"/>
+            <line x1="40" y1="204" x2="520" y2="204" stroke="#00d4aa" stroke-width="1.5" stroke-dasharray="6,4"/>
+            <text x="530" y="208" fill="#00d4aa" font-size="11" font-weight="600" font-family="sans-serif">Support</text>
+
+            <!-- Price line bouncing -->
+            <polyline points="50,200 90,190 120,200 160,70 190,45 210,42 230,50 260,200 300,195 320,200 360,55 390,42 410,48 440,200 480,190 510,195" fill="none" stroke="#e2e8f0" stroke-width="2" stroke-linejoin="round"/>
+
+            <!-- Bounce arrows at support -->
+            <text x="120" y="230" fill="#00d4aa" text-anchor="middle" font-size="10" font-family="sans-serif">bounce</text>
+            <text x="310" y="230" fill="#00d4aa" text-anchor="middle" font-size="10" font-family="sans-serif">bounce</text>
+            <text x="450" y="230" fill="#00d4aa" text-anchor="middle" font-size="10" font-family="sans-serif">bounce</text>
+
+            <!-- Rejection arrows at resistance -->
+            <text x="200" y="25" fill="#ff4757" text-anchor="middle" font-size="10" font-family="sans-serif">rejected</text>
+            <text x="390" y="25" fill="#ff4757" text-anchor="middle" font-size="10" font-family="sans-serif">rejected</text>
+
+            <text x="280" y="255" fill="#64748b" text-anchor="middle" font-size="10" font-style="italic" font-family="sans-serif">Price bounces between support (floor) and resistance (ceiling)</text>
+        </svg>
+    </div>
 </div>
 
 <div class="content-section">
@@ -1119,9 +1305,36 @@ module6: `
 <div class="content-section">
     <h2>Support Becomes Resistance (and Vice Versa)</h2>
     <p>When price breaks through a support level convincingly, that former support becomes resistance. When price breaks through resistance, it becomes support. This is called <strong>polarity</strong> and it is one of the most reliable concepts in technical analysis.</p>
-    <div class="formula-block">
-        Price at 5,200 (support) → Breaks below → Price rallies back to 5,200<br>
-        Now 5,200 acts as RESISTANCE → Expect sellers here
+    <div class="diagram">
+        <svg viewBox="0 0 560 240" xmlns="http://www.w3.org/2000/svg" style="max-width:560px;width:100%">
+            <!-- The level line -->
+            <line x1="30" y1="110" x2="530" y2="110" stroke="#3b82f6" stroke-width="1.5" stroke-dasharray="6,4"/>
+
+            <!-- Phase labels -->
+            <text x="100" y="20" fill="#e2e8f0" text-anchor="middle" font-size="11" font-weight="600" font-family="sans-serif">Acts as Support</text>
+            <text x="430" y="20" fill="#e2e8f0" text-anchor="middle" font-size="11" font-weight="600" font-family="sans-serif">Now Acts as Resistance</text>
+
+            <!-- Price line: bounces at support, then breaks, then gets rejected -->
+            <polyline points="40,80 70,100 90,108 100,100 130,70 160,90 180,108 190,100 220,60 250,108 270,130 290,160 310,190 330,170 350,140 370,115 385,112 395,120 410,150 440,180 470,200" fill="none" stroke="#e2e8f0" stroke-width="2" stroke-linejoin="round"/>
+
+            <!-- Bounce markers at support -->
+            <circle cx="90" cy="108" r="4" fill="none" stroke="#00d4aa" stroke-width="1.5"/>
+            <circle cx="180" cy="108" r="4" fill="none" stroke="#00d4aa" stroke-width="1.5"/>
+            <text x="135" y="135" fill="#00d4aa" text-anchor="middle" font-size="10" font-family="sans-serif">bounces &#x2191;</text>
+
+            <!-- Break marker -->
+            <circle cx="250" cy="108" r="4" fill="none" stroke="#ffa502" stroke-width="1.5"/>
+            <text x="270" y="155" fill="#ffa502" font-size="10" font-family="sans-serif">BREAK &#x2193;</text>
+
+            <!-- Rejection at the same level (now resistance) -->
+            <circle cx="385" cy="112" r="4" fill="none" stroke="#ff4757" stroke-width="1.5"/>
+            <text x="410" y="100" fill="#ff4757" font-size="10" font-family="sans-serif">rejected &#x2193;</text>
+
+            <!-- Level label -->
+            <text x="540" y="106" fill="#3b82f6" font-size="10" font-weight="600" font-family="sans-serif">5,200</text>
+
+            <text x="280" y="230" fill="#64748b" text-anchor="middle" font-size="10" font-style="italic" font-family="sans-serif">Polarity: broken support becomes resistance (and vice versa)</text>
+        </svg>
     </div>
 </div>
 
@@ -1218,6 +1431,49 @@ module7: `
         61.8% level: 5,250 - (100 × 0.618) = 5,188.20<br><br>
         Expect potential support (buying opportunities) at these levels during pullbacks.
     </div>
+
+    <div class="diagram">
+        <svg viewBox="0 0 560 300" xmlns="http://www.w3.org/2000/svg" style="max-width:560px;width:100%">
+            <!-- Uptrend line from swing low to swing high -->
+            <polyline points="60,250 100,230 130,240 170,200 200,210 240,160 270,170 310,100 340,110 380,60" fill="none" stroke="#00d4aa" stroke-width="2.5" stroke-linejoin="round"/>
+
+            <!-- Pullback from swing high -->
+            <polyline points="380,60 400,80 420,70 445,130 460,120 480,145 500,135" fill="none" stroke="#ff4757" stroke-width="2" stroke-linejoin="round" stroke-dasharray="4,2"/>
+
+            <!-- Swing Low label -->
+            <circle cx="60" cy="250" r="5" fill="#00d4aa"/>
+            <text x="60" y="275" fill="#00d4aa" text-anchor="middle" font-size="10" font-weight="600" font-family="sans-serif">Swing Low</text>
+            <text x="60" y="287" fill="#94a3b8" text-anchor="middle" font-size="9" font-family="sans-serif">5,150</text>
+
+            <!-- Swing High label -->
+            <circle cx="380" cy="60" r="5" fill="#00d4aa"/>
+            <text x="380" y="45" fill="#00d4aa" text-anchor="middle" font-size="10" font-weight="600" font-family="sans-serif">Swing High</text>
+            <text x="380" y="33" fill="#94a3b8" text-anchor="middle" font-size="9" font-family="sans-serif">5,250</text>
+
+            <!-- Fib levels (horizontal lines) -->
+            <!-- 0% = Swing High = y60, 100% = Swing Low = y250, range = 190px -->
+            <!-- 38.2% = 60 + 190*0.382 = 132.6 -->
+            <line x1="350" y1="133" x2="530" y2="133" stroke="#3b82f6" stroke-width="1" stroke-dasharray="4,3"/>
+            <text x="535" y="137" fill="#3b82f6" font-size="10" font-weight="600" font-family="sans-serif">38.2%</text>
+            <text x="535" y="149" fill="#64748b" font-size="8" font-family="sans-serif">5,211.80</text>
+
+            <!-- 50% = 60 + 190*0.5 = 155 -->
+            <line x1="350" y1="155" x2="530" y2="155" stroke="#ffa502" stroke-width="1" stroke-dasharray="4,3"/>
+            <text x="535" y="159" fill="#ffa502" font-size="10" font-weight="600" font-family="sans-serif">50.0%</text>
+            <text x="535" y="171" fill="#64748b" font-size="8" font-family="sans-serif">5,200.00</text>
+
+            <!-- 61.8% = 60 + 190*0.618 = 177.4 -->
+            <line x1="350" y1="177" x2="530" y2="177" stroke="#ff4757" stroke-width="1" stroke-dasharray="4,3"/>
+            <text x="535" y="181" fill="#ff4757" font-size="10" font-weight="600" font-family="sans-serif">61.8%</text>
+            <text x="535" y="193" fill="#64748b" font-size="8" font-family="sans-serif">5,188.20</text>
+
+            <!-- Pullback arrow -->
+            <text x="460" y="115" fill="#ff4757" font-size="10" font-family="sans-serif">Pullback</text>
+
+            <text x="280" y="298" fill="#64748b" text-anchor="middle" font-size="10" font-style="italic" font-family="sans-serif">Fibonacci levels mark where pullbacks are likely to find support</text>
+        </svg>
+    </div>
+
     <div class="info-box tip">
         <div class="box-title">Fibonacci Confluence</div>
         <p>Fibonacci levels are most powerful when they <strong>line up with other levels</strong> — VWAP, a horizontal S/R zone, an EMA, or a round number. When a Fibonacci level and VWAP are at the same price, that level is extremely strong. This is called "confluence" and it's what professional traders look for. A Fibonacci level by itself is moderate; a Fibonacci level with 2-3 confirming factors is high-probability.</p>
@@ -1239,6 +1495,31 @@ module7: `
     <p>When the <strong>sprinter passes the jogger going downhill</strong> (9 EMA crosses below 21 EMA), short-term momentum has shifted bearish. This is a <strong>bearish crossover</strong> — look for shorts.</p>
     <p>When both runners are running side by side (EMAs are flat and close together), the market is going nowhere — it's ranging. <strong>Don't trade crossover signals when the EMAs are flat.</strong> Crossovers only work in trending markets.</p>
 
+    <div class="diagram">
+        <svg viewBox="0 0 560 220" xmlns="http://www.w3.org/2000/svg" style="max-width:560px;width:100%">
+            <!-- 21 EMA (slower, smoother) -->
+            <path d="M 30,160 Q 80,155 130,150 Q 180,140 230,120 Q 280,100 330,90 Q 380,85 430,88 Q 480,95 530,110" fill="none" stroke="#3b82f6" stroke-width="2.5"/>
+            <text x="535" y="114" fill="#3b82f6" font-size="9" font-weight="600" font-family="sans-serif">21 EMA</text>
+
+            <!-- 9 EMA (faster, more reactive) -->
+            <path d="M 30,170 Q 60,168 90,160 Q 120,145 150,130 Q 180,110 210,95 Q 240,80 270,65 Q 300,55 330,60 Q 360,70 390,85 Q 420,100 450,105 Q 480,115 530,130" fill="none" stroke="#ffa502" stroke-width="2.5"/>
+            <text x="535" y="134" fill="#ffa502" font-size="9" font-weight="600" font-family="sans-serif">9 EMA</text>
+
+            <!-- Bullish crossover point (around x=110) -->
+            <circle cx="110" cy="153" r="8" fill="none" stroke="#00d4aa" stroke-width="2"/>
+            <text x="110" y="185" fill="#00d4aa" text-anchor="middle" font-size="10" font-weight="600" font-family="sans-serif">Bullish Cross</text>
+            <text x="110" y="198" fill="#00d4aa" text-anchor="middle" font-size="9" font-family="sans-serif">&#x2191; Look for longs</text>
+
+            <!-- Bearish crossover point (around x=410) -->
+            <circle cx="415" cy="93" r="8" fill="none" stroke="#ff4757" stroke-width="2"/>
+            <text x="415" y="50" fill="#ff4757" text-anchor="middle" font-size="10" font-weight="600" font-family="sans-serif">Bearish Cross</text>
+            <text x="415" y="63" fill="#ff4757" text-anchor="middle" font-size="9" font-family="sans-serif">&#x2193; Look for shorts</text>
+
+            <!-- Trend labels -->
+            <text x="260" y="30" fill="#00d4aa" text-anchor="middle" font-size="10" font-family="sans-serif">9 EMA above 21 EMA = Uptrend</text>
+        </svg>
+    </div>
+
     <h3>5. ATR (Average True Range) — 14 Period</h3>
     <p><strong>What it is:</strong> Measures the average range of price movement over 14 periods. This tells you how volatile the market is RIGHT NOW.</p>
     <ul>
@@ -1253,6 +1534,74 @@ module7: `
 </div>
 
 <div class="content-section">
+    <h2>Market Internals — The Dashboard Pros Actually Watch</h2>
+    <p>Market internals are breadth indicators that measure the health of the ENTIRE market, not just the price of one contract. Professional ES/NQ traders treat these as essential context — like checking the weather before sailing. You wouldn't trade ES in a vacuum any more than you'd set sail without knowing if a storm is coming.</p>
+
+    <h3>$TICK (NYSE Tick Index)</h3>
+    <p><strong>What it is:</strong> At any given moment, every NYSE stock is either ticking up (last trade was higher than previous) or ticking down. $TICK = (number of stocks ticking up) minus (number of stocks ticking down). It updates every 6 seconds.</p>
+    <ul>
+        <li><strong>Range:</strong> Typically oscillates between -500 and +500 during normal trading. Extreme readings beyond ±800 are significant.</li>
+        <li><strong>+1000 or higher:</strong> Extreme buying breadth. Nearly every stock is being bid up simultaneously. This usually happens during strong institutional buying programs. Bullish for ES — if you're short, get cautious.</li>
+        <li><strong>-1000 or lower:</strong> Extreme selling breadth. Nearly every stock is being hit. Institutional panic selling. Bearish for ES — if you're long, get cautious.</li>
+        <li><strong>Sustained positive $TICK (staying above +200):</strong> Broad bullish pressure. Pullbacks on ES are more likely to be bought.</li>
+        <li><strong>Sustained negative $TICK (staying below -200):</strong> Broad bearish pressure. Rallies on ES are more likely to be sold.</li>
+    </ul>
+    <div class="formula-block">
+        HOW TO USE $TICK FOR ENTRIES:<br><br>
+        LONG SETUP: You see a VWAP pullback on ES. Before entering, check $TICK.<br>
+        If $TICK is positive and trending up → TAKE the trade (broad market supports your long).<br>
+        If $TICK is -600 and dropping → SKIP the trade (the broad market is selling, your ES long is fighting the tide).<br><br>
+        SHORT SETUP: You see resistance rejection on ES. Check $TICK.<br>
+        If $TICK is negative and making new lows → TAKE the short (broad selling confirms).<br>
+        If $TICK is +800 → SKIP the short (institutions are buying everything in sight).
+    </div>
+    <p><strong>In TradingView:</strong> Open a second chart panel. Type <strong>USI:TICK</strong> in the symbol search. Set it to a 1-minute or 5-minute chart. Watch it alongside your MES/ES chart.</p>
+
+    <h3>$ADD (NYSE Advance-Decline Line)</h3>
+    <p><strong>What it is:</strong> The cumulative difference between advancing stocks (price up today) and declining stocks (price down today) on the NYSE. Unlike $TICK which updates every 6 seconds, $ADD is a running total for the day.</p>
+    <ul>
+        <li><strong>$ADD rising all day:</strong> More stocks are going up than down. Broad bullish day. ES pullbacks are buying opportunities.</li>
+        <li><strong>$ADD falling all day:</strong> More stocks are declining. Broad bearish day. ES rallies are selling opportunities.</li>
+        <li><strong>$ADD diverging from ES:</strong> If ES makes a new high but $ADD does NOT make a new high, breadth is weakening. The rally is being driven by a few large stocks, not broad participation. This divergence often precedes a reversal.</li>
+    </ul>
+    <p><strong>In TradingView:</strong> Symbol: <strong>USI:ADL</strong>. Display as a line chart in a separate panel.</p>
+
+    <h3>VIX — The Fear Gauge</h3>
+    <p><strong>What it is:</strong> The CBOE Volatility Index measures expected volatility of the S&P 500 over the next 30 days, derived from options pricing. It's often called the "fear index" because it spikes when traders are scared.</p>
+    <ul>
+        <li><strong>VIX below 15:</strong> Low fear. Complacent market. Moves tend to be smaller. Good for range strategies.</li>
+        <li><strong>VIX 15-25:</strong> Normal volatility. Standard trading conditions.</li>
+        <li><strong>VIX 25-35:</strong> Elevated fear. Larger swings. Wider stops needed. Good opportunities but more dangerous.</li>
+        <li><strong>VIX above 35:</strong> Panic territory. 2020 COVID crash hit VIX 82. Moves are extreme and unpredictable. Beginners should sit out or reduce size significantly.</li>
+    </ul>
+    <p><strong>Key relationship:</strong> VIX and ES move inversely about 80% of the time. When ES drops, VIX rises (fear increases). When ES rallies, VIX falls (fear decreases). If ES is dropping but VIX isn't rising, the selloff may lack conviction.</p>
+    <p><strong>Practical use:</strong> Check VIX before your session. If VIX is at 30 and you usually set an 8-tick stop on MES, consider widening to 12-16 ticks because volatility is elevated — normal noise is bigger. Your position size decreases accordingly (same dollar risk, wider stop = fewer contracts).</p>
+    <p><strong>In TradingView:</strong> Symbol: <strong>TVC:VIX</strong>. Keep it visible as a small panel or just check it once before your session.</p>
+
+    <div class="info-box tip">
+        <div class="box-title">Internals Setup for Beginners</div>
+        <p>You don't need to stare at all of these simultaneously. Start with just <strong>$TICK</strong> — it's the most immediately actionable. Add it as a small panel below your ES chart. Use it as a filter: only take longs when $TICK is positive, only take shorts when $TICK is negative. This single filter eliminates many trades where you'd be fighting the broad market. After a month of watching $TICK, add $ADD and VIX awareness to your routine.</p>
+    </div>
+</div>
+
+<div class="content-section">
+    <h2>Intermarket Correlations — What Moves ES</h2>
+    <p>ES doesn't trade in isolation. Several other instruments directly influence its direction. Understanding these relationships gives you an edge that most retail traders ignore.</p>
+    <table class="data-table">
+        <thead>
+            <tr><th>Instrument</th><th>Symbol</th><th>Relationship to ES</th><th>How to Use It</th></tr>
+        </thead>
+        <tbody>
+            <tr><td><strong>10-Year Treasury Yield</strong></td><td>TNX or US10Y</td><td>Inverse correlation. Rising yields → ES pressure (higher borrowing costs). Falling yields → ES support.</td><td>If yields are spiking sharply, be cautious on ES longs even if the chart looks bullish. Bonds lead stocks sometimes.</td></tr>
+            <tr><td><strong>US Dollar Index</strong></td><td>DXY</td><td>Generally inverse. Strong dollar → ES pressure (hurts multinational earnings). Weak dollar → ES support.</td><td>If DXY is breaking out to new highs, ES headwinds are likely. Less useful intraday, more for daily bias.</td></tr>
+            <tr><td><strong>VIX</strong></td><td>VIX</td><td>Inverse (~80% of the time). Fear up → ES down. Fear down → ES up.</td><td>VIX divergence from ES signals weakening moves. If ES rallies but VIX doesn't drop, the rally is suspect.</td></tr>
+            <tr><td><strong>NQ (Nasdaq)</strong></td><td>NQ / MNQ</td><td>Positive (~85-90%). Moves in same direction but 1.3-1.5× magnitude.</td><td>If ES breaks out but NQ doesn't confirm, the breakout is weaker. Both breaking out together = high conviction.</td></tr>
+        </tbody>
+    </table>
+    <p><strong>You don't need to trade these.</strong> Just glance at them before your session and during your trades. If all the correlated instruments are confirming your ES trade direction, your conviction goes up. If they're diverging, reduce size or skip the trade.</p>
+</div>
+
+<div class="content-section">
     <h2>Your Starter Indicator Setup</h2>
     <table class="data-table">
         <thead>
@@ -1263,6 +1612,8 @@ module7: `
             <tr><td>15-min chart</td><td>VWAP, 9 EMA, 21 EMA</td><td>Trend direction — confirms your bias</td></tr>
             <tr><td>Below chart</td><td>Volume bars, RSI (14)</td><td>Confirmation — validate setups, RSI 50 for trend filter</td></tr>
             <tr><td>As needed</td><td>Fibonacci Retracement</td><td>Draw on swing highs/lows to find pullback targets</td></tr>
+            <tr><td>Separate panel</td><td>$TICK (USI:TICK)</td><td>Market internals — filter trades with broad market direction</td></tr>
+            <tr><td>Pre-session check</td><td>VIX (TVC:VIX)</td><td>Volatility context — adjust stop widths and expectations</td></tr>
         </tbody>
     </table>
 </div>
@@ -1397,6 +1748,56 @@ module8: `
         </tbody>
     </table>
 
+    <div class="diagram">
+        <svg viewBox="0 0 560 320" xmlns="http://www.w3.org/2000/svg" style="max-width:560px;width:100%">
+            <!-- Price scale on left -->
+            <text x="28" y="35" fill="#64748b" text-anchor="end" font-size="9" font-family="sans-serif">5,220</text>
+            <text x="28" y="65" fill="#64748b" text-anchor="end" font-size="9" font-family="sans-serif">5,215</text>
+            <text x="28" y="95" fill="#64748b" text-anchor="end" font-size="9" font-family="sans-serif">5,210</text>
+            <text x="28" y="125" fill="#64748b" text-anchor="end" font-size="9" font-family="sans-serif">5,205</text>
+            <text x="28" y="155" fill="#ff4757" text-anchor="end" font-size="10" font-weight="600" font-family="sans-serif">5,200</text>
+            <text x="28" y="185" fill="#64748b" text-anchor="end" font-size="9" font-family="sans-serif">5,195</text>
+            <text x="28" y="215" fill="#64748b" text-anchor="end" font-size="9" font-family="sans-serif">5,190</text>
+            <text x="28" y="245" fill="#64748b" text-anchor="end" font-size="9" font-family="sans-serif">5,185</text>
+
+            <!-- Horizontal volume bars -->
+            <rect x="35" y="25" width="60" height="22" fill="#3b82f633" rx="2"/>
+            <rect x="35" y="55" width="120" height="22" fill="#3b82f633" rx="2"/>
+            <rect x="35" y="85" width="80" height="22" fill="#3b82f633" rx="2"/>
+            <rect x="35" y="115" width="200" height="22" fill="#3b82f633" rx="2"/>
+            <!-- POC - longest bar -->
+            <rect x="35" y="145" width="300" height="22" fill="#ff475740" rx="2" stroke="#ff4757" stroke-width="1"/>
+            <rect x="35" y="175" width="180" height="22" fill="#3b82f633" rx="2"/>
+            <rect x="35" y="205" width="40" height="22" fill="#3b82f620" rx="2"/>
+            <rect x="35" y="235" width="30" height="22" fill="#3b82f620" rx="2"/>
+
+            <!-- Value Area bracket -->
+            <line x1="350" y1="55" x2="350" y2="197" stroke="#ffa502" stroke-width="1.5"/>
+            <line x1="345" y1="55" x2="355" y2="55" stroke="#ffa502" stroke-width="1.5"/>
+            <line x1="345" y1="197" x2="355" y2="197" stroke="#ffa502" stroke-width="1.5"/>
+            <text x="360" y="100" fill="#ffa502" font-size="10" font-weight="600" font-family="sans-serif">Value Area</text>
+            <text x="360" y="114" fill="#ffa502" font-size="9" font-family="sans-serif">(70% of volume)</text>
+
+            <!-- VAH label -->
+            <text x="360" y="62" fill="#ffa502" font-size="9" font-family="sans-serif">VAH</text>
+            <!-- VAL label -->
+            <text x="360" y="193" fill="#ffa502" font-size="9" font-family="sans-serif">VAL</text>
+
+            <!-- POC label -->
+            <text x="340" y="160" fill="#ff4757" font-size="10" font-weight="600" font-family="sans-serif">&#x2190; POC</text>
+            <text x="340" y="172" fill="#64748b" font-size="8" font-family="sans-serif">(most traded price)</text>
+
+            <!-- LVN label -->
+            <text x="80" y="230" fill="#64748b" font-size="9" font-family="sans-serif">&#x2190; LVN (price moves fast here)</text>
+
+            <!-- HVN label -->
+            <text x="240" y="130" fill="#64748b" font-size="9" font-family="sans-serif">&#x2190; HVN</text>
+
+            <text x="280" y="290" fill="#64748b" text-anchor="middle" font-size="10" font-style="italic" font-family="sans-serif">Volume Profile: horizontal bars show volume traded at each price level</text>
+            <text x="280" y="305" fill="#64748b" text-anchor="middle" font-size="9" font-style="italic" font-family="sans-serif">POC acts as a magnet — price tends to return to it</text>
+        </svg>
+    </div>
+
     <h3>Initial Balance (IB)</h3>
     <p>The Initial Balance is the price range established in the first 30-60 minutes of the US session (9:30-10:00 or 9:30-10:30 AM ET). Market Profile traders consider this crucial because:</p>
     <ul>
@@ -1418,6 +1819,52 @@ module8: `
     <div class="info-box tip">
         <div class="box-title">Volume Profile in TradingView</div>
         <p>In TradingView, add the "Volume Profile Visible Range" indicator. This overlays horizontal volume bars on your chart showing where the most trading happened. The thickest bar is the POC. The shaded area is the Value Area (70% of volume). <strong>Free TradingView plans have limited Volume Profile access — you may need a paid plan ($12.95/mo) for full functionality.</strong></p>
+    </div>
+</div>
+
+<div class="content-section">
+    <h2>Alternative Chart Types: Tick and Range Charts</h2>
+    <p>Time-based charts (5-minute, 15-minute) are the standard. But many professional futures traders also use chart types that ignore time entirely:</p>
+
+    <h3>Tick Charts</h3>
+    <p>A tick chart creates a new bar after a fixed NUMBER OF TRADES (not a fixed time period). Common settings: 500-tick, 1000-tick, 2000-tick.</p>
+    <ul>
+        <li><strong>How they differ:</strong> During high-volume periods (the open), tick charts produce many bars quickly — giving you more detail. During slow periods (lunch chop), they produce fewer bars — filtering out noise.</li>
+        <li><strong>Advantage:</strong> Naturally adapt to market activity. More data when it matters, less when it doesn't. Candlestick patterns on tick charts are often cleaner than time charts because each bar represents equal participation.</li>
+        <li><strong>Common settings for ES:</strong> 1000-tick or 2000-tick. For MES: 500-tick or 1000-tick (MES has higher trade count due to smaller contract size).</li>
+    </ul>
+
+    <h3>Range Charts (Renko-like)</h3>
+    <p>A range bar creates a new bar only when price moves a fixed number of points. Common settings: 2-point or 4-point range bars on ES.</p>
+    <ul>
+        <li><strong>How they differ:</strong> Every bar is the exact same height. A 4-point range bar always represents exactly 4 points of movement. This completely eliminates time — a bar might form in 10 seconds during a fast move or take 20 minutes during consolidation.</li>
+        <li><strong>Advantage:</strong> Makes trends extremely easy to see. Support/resistance levels are clearer. Eliminates the noise of small doji candles during chop.</li>
+        <li><strong>Disadvantage:</strong> Volume indicators don't work the same way. VWAP also behaves differently. Not ideal for beginners learning standard price action.</li>
+    </ul>
+
+    <div class="info-box tip">
+        <div class="box-title">Recommendation</div>
+        <p><strong>Start with time-based charts (5-minute).</strong> They're the standard, all educational material references them, and they work with all indicators normally. After 3+ months of consistent trading, experiment with a 1000-tick chart on ES or 500-tick on MES as a secondary view. Many experienced traders run BOTH a time chart and a tick chart side by side — the time chart for overall structure and the tick chart for precise entries.</p>
+    </div>
+</div>
+
+<div class="content-section">
+    <h2>Advanced Order Types (Know These Before Going Live)</h2>
+    <p>Beyond the basic market, limit, and stop orders (Module 4), these order types make trade management easier and faster:</p>
+    <table class="data-table">
+        <thead>
+            <tr><th>Order Type</th><th>What It Does</th><th>When to Use It</th></tr>
+        </thead>
+        <tbody>
+            <tr><td><strong>Bracket Order (OCO)</strong></td><td>Places your entry, stop-loss, AND profit target as one package. When one exit triggers, the other cancels automatically.</td><td>Every trade. This is how professionals enter trades. You define your stop and target BEFORE you enter, and they're placed simultaneously. No fumbling to set stops after entry.</td></tr>
+            <tr><td><strong>Trailing Stop Order</strong></td><td>A stop-loss that automatically moves with price by a fixed distance. If ES moves up 10 ticks, your stop moves up 10 ticks.</td><td>When you want a mechanical trail without manually adjusting. Set the trail distance in ticks. Be aware: the platform trails by a fixed amount, not by swing structure — it can get stopped out on normal pullbacks.</td></tr>
+            <tr><td><strong>Stop Limit Order</strong></td><td>Becomes a limit order (not market) when triggered. Prevents slippage but may not fill.</td><td>Use for profit targets or entries where you want a specific price. <strong>NEVER use for stop-losses</strong> — in a fast move, your stop limit might not fill and you ride the loss down.</td></tr>
+            <tr><td><strong>Flatten / Close All</strong></td><td>Instantly closes all open positions at market price.</td><td>Emergency button. Know where this is on your platform BEFORE you need it. Practice pressing it on sim.</td></tr>
+        </tbody>
+    </table>
+    <div class="info-box warning">
+        <div class="box-title">Use Bracket Orders From Day One</div>
+        <p>Most platforms (NinjaTrader, Tradovate, TradingView) support bracket orders. When you click "Buy," you simultaneously set your stop-loss and target. This means you are NEVER in a position without a stop. It eliminates the terrifying scenario of entering a trade and scrambling to place your stop while price moves against you. <strong>Configure bracket orders on your sim account now.</strong> Learn the keyboard shortcuts. Your default bracket should be pre-set to your standard stop distance and target.</p>
     </div>
 </div>
 
@@ -1472,6 +1919,81 @@ module9: `
         Target: 5,208.00 (previous high) → Reward = 26 ticks = $32.50<br>
         Risk:Reward = 1:1.86
     </div>
+
+    <div class="diagram">
+        <svg viewBox="0 0 560 280" xmlns="http://www.w3.org/2000/svg" style="max-width:560px;width:100%">
+            <!-- VWAP line (gentle curve) -->
+            <path d="M 40,155 Q 150,148 280,150 Q 400,152 520,148" fill="none" stroke="#3b82f6" stroke-width="2" stroke-dasharray="6,3"/>
+            <text x="525" y="145" fill="#3b82f6" font-size="10" font-weight="600" font-family="sans-serif">VWAP</text>
+
+            <!-- 9 EMA line -->
+            <path d="M 40,130 Q 120,120 200,105 Q 260,125 310,145 Q 350,130 420,95 Q 480,80 520,70" fill="none" stroke="#ffa502" stroke-width="1.5" opacity="0.6"/>
+            <text x="525" y="68" fill="#ffa502" font-size="9" font-family="sans-serif">9 EMA</text>
+
+            <!-- Price candles showing uptrend, pullback to VWAP, bounce -->
+            <!-- Uptrend candles -->
+            <rect x="55" y="100" width="14" height="30" fill="#00d4aa" rx="1"/>
+            <line x1="62" y1="90" x2="62" y2="100" stroke="#00d4aa" stroke-width="1.5"/>
+            <line x1="62" y1="130" x2="62" y2="140" stroke="#00d4aa" stroke-width="1.5"/>
+
+            <rect x="80" y="85" width="14" height="35" fill="#00d4aa" rx="1"/>
+            <line x1="87" y1="78" x2="87" y2="85" stroke="#00d4aa" stroke-width="1.5"/>
+            <line x1="87" y1="120" x2="87" y2="128" stroke="#00d4aa" stroke-width="1.5"/>
+
+            <rect x="105" y="75" width="14" height="30" fill="#00d4aa" rx="1"/>
+            <line x1="112" y1="65" x2="112" y2="75" stroke="#00d4aa" stroke-width="1.5"/>
+            <line x1="112" y1="105" x2="112" y2="112" stroke="#00d4aa" stroke-width="1.5"/>
+
+            <!-- Pullback candles (red, moving down toward VWAP) -->
+            <rect x="135" y="90" width="14" height="20" fill="#ff4757" rx="1"/>
+            <line x1="142" y1="82" x2="142" y2="90" stroke="#ff4757" stroke-width="1.5"/>
+            <line x1="142" y1="110" x2="142" y2="120" stroke="#ff4757" stroke-width="1.5"/>
+
+            <rect x="160" y="110" width="14" height="22" fill="#ff4757" rx="1"/>
+            <line x1="167" y1="100" x2="167" y2="110" stroke="#ff4757" stroke-width="1.5"/>
+            <line x1="167" y1="132" x2="167" y2="140" stroke="#ff4757" stroke-width="1.5"/>
+
+            <rect x="185" y="125" width="14" height="18" fill="#ff4757" rx="1"/>
+            <line x1="192" y1="118" x2="192" y2="125" stroke="#ff4757" stroke-width="1.5"/>
+            <line x1="192" y1="143" x2="192" y2="155" stroke="#ff4757" stroke-width="1.5"/>
+
+            <!-- Hammer at VWAP (confirmation candle) -->
+            <rect x="213" y="138" width="14" height="12" fill="#00d4aa" rx="1"/>
+            <line x1="220" y1="132" x2="220" y2="138" stroke="#00d4aa" stroke-width="1.5"/>
+            <line x1="220" y1="150" x2="220" y2="175" stroke="#00d4aa" stroke-width="2"/>
+            <text x="245" y="165" fill="#ffa502" font-size="9" font-weight="600" font-family="sans-serif">Hammer at VWAP</text>
+
+            <!-- Entry arrow -->
+            <line x1="250" y1="133" x2="250" y2="133" stroke="#00d4aa" stroke-width="1"/>
+            <line x1="260" y1="130" x2="320" y2="130" stroke="#00d4aa" stroke-width="1.5" stroke-dasharray="3,2"/>
+            <text x="325" y="134" fill="#00d4aa" font-size="9" font-weight="600" font-family="sans-serif">ENTRY 5,201.50</text>
+
+            <!-- Stop loss line -->
+            <line x1="210" y1="185" x2="320" y2="185" stroke="#ff4757" stroke-width="1.5" stroke-dasharray="3,2"/>
+            <text x="325" y="189" fill="#ff4757" font-size="9" font-weight="600" font-family="sans-serif">STOP 5,198.00</text>
+
+            <!-- Continuation candles after bounce -->
+            <rect x="245" y="108" width="14" height="25" fill="#00d4aa" rx="1"/>
+            <line x1="252" y1="100" x2="252" y2="108" stroke="#00d4aa" stroke-width="1.5"/>
+            <line x1="252" y1="133" x2="252" y2="138" stroke="#00d4aa" stroke-width="1.5"/>
+
+            <rect x="270" y="88" width="14" height="28" fill="#00d4aa" rx="1"/>
+            <line x1="277" y1="80" x2="277" y2="88" stroke="#00d4aa" stroke-width="1.5"/>
+            <line x1="277" y1="116" x2="277" y2="122" stroke="#00d4aa" stroke-width="1.5"/>
+
+            <!-- Target line -->
+            <line x1="260" y1="68" x2="320" y2="68" stroke="#00d4aa" stroke-width="1.5" stroke-dasharray="3,2"/>
+            <text x="325" y="72" fill="#00d4aa" font-size="9" font-weight="600" font-family="sans-serif">TARGET 5,208.00</text>
+
+            <!-- Risk/Reward bracket -->
+            <line x1="500" y1="68" x2="500" y2="130" stroke="#00d4aa" stroke-width="1"/>
+            <text x="510" y="102" fill="#00d4aa" font-size="8" font-family="sans-serif">R</text>
+            <line x1="500" y1="130" x2="500" y2="185" stroke="#ff4757" stroke-width="1"/>
+            <text x="510" y="160" fill="#ff4757" font-size="8" font-family="sans-serif">r</text>
+
+            <text x="280" y="270" fill="#64748b" text-anchor="middle" font-size="10" font-style="italic" font-family="sans-serif">VWAP Pullback: buy the bounce off VWAP in an uptrend</text>
+        </svg>
+    </div>
 </div>
 
 <div class="content-section">
@@ -1503,6 +2025,112 @@ module9: `
         <li><strong>Stop Loss:</strong> Opposite side of the opening range, or midpoint of the range if the range is very wide.</li>
         <li><strong>Target:</strong> The height of the opening range projected from the breakout point, or next S/R level.</li>
     </ol>
+
+    <div class="diagram">
+        <svg viewBox="0 0 560 250" xmlns="http://www.w3.org/2000/svg" style="max-width:560px;width:100%">
+            <!-- Time labels -->
+            <text x="80" y="235" fill="#64748b" text-anchor="middle" font-size="9" font-family="sans-serif">9:30</text>
+            <text x="240" y="235" fill="#64748b" text-anchor="middle" font-size="9" font-family="sans-serif">10:00</text>
+            <text x="430" y="235" fill="#64748b" text-anchor="middle" font-size="9" font-family="sans-serif">10:30+</text>
+
+            <!-- Opening range zone -->
+            <rect x="50" y="90" width="210" height="80" fill="#3b82f610" rx="3"/>
+            <line x1="50" y1="90" x2="530" y2="90" stroke="#3b82f6" stroke-width="1.5" stroke-dasharray="5,3"/>
+            <line x1="50" y1="170" x2="530" y2="170" stroke="#3b82f6" stroke-width="1.5" stroke-dasharray="5,3"/>
+            <text x="45" y="88" fill="#3b82f6" text-anchor="end" font-size="9" font-weight="600" font-family="sans-serif">OR High</text>
+            <text x="45" y="174" fill="#3b82f6" text-anchor="end" font-size="9" font-weight="600" font-family="sans-serif">OR Low</text>
+
+            <!-- Candles inside opening range (9:30-10:00) -->
+            <rect x="70" y="110" width="12" height="40" fill="#00d4aa" rx="1"/>
+            <line x1="76" y1="100" x2="76" y2="110" stroke="#00d4aa" stroke-width="1.5"/>
+            <line x1="76" y1="150" x2="76" y2="160" stroke="#00d4aa" stroke-width="1.5"/>
+
+            <rect x="95" y="120" width="12" height="30" fill="#ff4757" rx="1"/>
+            <line x1="101" y1="105" x2="101" y2="120" stroke="#ff4757" stroke-width="1.5"/>
+            <line x1="101" y1="150" x2="101" y2="165" stroke="#ff4757" stroke-width="1.5"/>
+
+            <rect x="120" y="115" width="12" height="35" fill="#00d4aa" rx="1"/>
+            <line x1="126" y1="108" x2="126" y2="115" stroke="#00d4aa" stroke-width="1.5"/>
+            <line x1="126" y1="150" x2="126" y2="158" stroke="#00d4aa" stroke-width="1.5"/>
+
+            <rect x="145" y="100" width="12" height="40" fill="#ff4757" rx="1"/>
+            <line x1="151" y1="95" x2="151" y2="100" stroke="#ff4757" stroke-width="1.5"/>
+            <line x1="151" y1="140" x2="151" y2="155" stroke="#ff4757" stroke-width="1.5"/>
+
+            <rect x="170" y="110" width="12" height="30" fill="#00d4aa" rx="1"/>
+            <line x1="176" y1="103" x2="176" y2="110" stroke="#00d4aa" stroke-width="1.5"/>
+            <line x1="176" y1="140" x2="176" y2="150" stroke="#00d4aa" stroke-width="1.5"/>
+
+            <rect x="195" y="105" width="12" height="35" fill="#00d4aa" rx="1"/>
+            <line x1="201" y1="98" x2="201" y2="105" stroke="#00d4aa" stroke-width="1.5"/>
+            <line x1="201" y1="140" x2="201" y2="148" stroke="#00d4aa" stroke-width="1.5"/>
+
+            <rect x="220" y="100" width="12" height="30" fill="#00d4aa" rx="1"/>
+            <line x1="226" y1="93" x2="226" y2="100" stroke="#00d4aa" stroke-width="1.5"/>
+            <line x1="226" y1="130" x2="226" y2="140" stroke="#00d4aa" stroke-width="1.5"/>
+
+            <!-- Breakout candle (big green closing above OR High) -->
+            <rect x="250" y="60" width="16" height="35" fill="#00d4aa" rx="2" stroke="#00d4aa" stroke-width="1"/>
+            <line x1="258" y1="55" x2="258" y2="60" stroke="#00d4aa" stroke-width="2"/>
+            <line x1="258" y1="95" x2="258" y2="100" stroke="#00d4aa" stroke-width="2"/>
+            <text x="280" y="72" fill="#00d4aa" font-size="9" font-weight="600" font-family="sans-serif">BREAKOUT</text>
+            <text x="280" y="83" fill="#00d4aa" font-size="8" font-family="sans-serif">with volume</text>
+
+            <!-- Continuation candles -->
+            <rect x="280" y="45" width="14" height="25" fill="#00d4aa" rx="1"/>
+            <line x1="287" y1="40" x2="287" y2="45" stroke="#00d4aa" stroke-width="1.5"/>
+            <line x1="287" y1="70" x2="287" y2="78" stroke="#00d4aa" stroke-width="1.5"/>
+
+            <rect x="305" y="35" width="14" height="22" fill="#00d4aa" rx="1"/>
+            <line x1="312" y1="28" x2="312" y2="35" stroke="#00d4aa" stroke-width="1.5"/>
+            <line x1="312" y1="57" x2="312" y2="65" stroke="#00d4aa" stroke-width="1.5"/>
+
+            <!-- Target line -->
+            <line x1="240" y1="20" x2="400" y2="20" stroke="#00d4aa" stroke-width="1.5" stroke-dasharray="3,2"/>
+            <text x="405" y="24" fill="#00d4aa" font-size="9" font-weight="600" font-family="sans-serif">Target (OR height projected)</text>
+
+            <!-- Stop line -->
+            <line x1="240" y1="170" x2="340" y2="170" stroke="#ff4757" stroke-width="1.5"/>
+            <text x="345" y="174" fill="#ff4757" font-size="9" font-weight="600" font-family="sans-serif">Stop (OR Low)</text>
+
+            <!-- Opening range label -->
+            <text x="155" y="218" fill="#3b82f6" text-anchor="middle" font-size="10" font-family="sans-serif">Opening Range (first 30 min)</text>
+        </svg>
+    </div>
+</div>
+
+<div class="content-section">
+    <h2>Setup 4: Gap Fill Fade (Intermediate)</h2>
+    <p>When ES opens with a small gap from the prior day's close, the gap frequently fills within the first 1-2 hours. This setup trades the mean reversion. <strong>Learn setups 1-3 first — add this after 60+ trades on sim.</strong></p>
+
+    <h3>Rules</h3>
+    <ol>
+        <li><strong>Identify the gap:</strong> At 9:30 AM, note the distance between the current price and yesterday's closing price. Gap must be 3-12 points on ES (smaller gaps aren't worth the commission; larger gaps may not fill).</li>
+        <li><strong>Check context:</strong> No major news catalyst (CPI, FOMC, NFP). $TICK should be neutral or moving toward the gap fill direction. The gap should NOT be a "true gap" (beyond the entire prior day's range).</li>
+        <li><strong>Wait for confirmation:</strong> In the first 5-15 minutes, watch for a rejection candle in the gap direction. For a gap up: shooting star or bearish engulfing. For a gap down: hammer or bullish engulfing.</li>
+        <li><strong>Entry:</strong> On the close of the rejection candle.</li>
+        <li><strong>Stop Loss:</strong> Beyond the opening range high (for shorting gap up) or low (for buying gap down). Typically 4-8 points.</li>
+        <li><strong>Target:</strong> The prior day's closing price (the "gap fill" level).</li>
+    </ol>
+    <div class="info-box warning">
+        <div class="box-title">Gap Fill Exceptions — Do NOT Fade These</div>
+        <p>Large gaps (&gt;1% / 50+ points on ES) driven by overnight news, earnings, or economic data. Gaps that open beyond the prior day's entire range. Gaps where $TICK confirms the gap direction (e.g., gap up + $TICK at +800 = gap and go, not a fill). If the first 15-minute candle is a strong Marubozu in the gap direction, the gap is running — don't fight it.</p>
+    </div>
+</div>
+
+<div class="content-section">
+    <h2>Using Market Internals as a Trade Filter</h2>
+    <p>After learning about $TICK, $ADD, and VIX in Module 7, here's how to integrate them into your setup checklist:</p>
+    <table class="data-table">
+        <thead>
+            <tr><th>Your Setup Direction</th><th>$TICK Should Be</th><th>$ADD Should Be</th><th>VIX Context</th></tr>
+        </thead>
+        <tbody>
+            <tr><td><strong>Long</strong></td><td>Positive or rising from negative</td><td>Rising (more advancers)</td><td>Falling or stable. If VIX is spiking, skip or reduce size.</td></tr>
+            <tr><td><strong>Short</strong></td><td>Negative or falling from positive</td><td>Falling (more decliners)</td><td>Rising or stable. If VIX is collapsing, skip or reduce size.</td></tr>
+        </tbody>
+    </table>
+    <p><strong>This is a filter, not a setup.</strong> Internals don't tell you WHERE to enter — your setups do that. Internals tell you WHETHER to enter. A perfect VWAP pullback long setup with $TICK at -800 and falling is a skip. The same setup with $TICK at +500 and rising is high conviction.</p>
 </div>
 
 <div class="content-section">
@@ -1724,6 +2352,107 @@ module10: `
 
     <h3>The Tradeoff</h3>
     <p>Scaling out reduces your average profit per trade compared to holding the entire position to your full target. In a strong trending market, holding the full position is more profitable. But for beginners, the psychological benefit of scaling out dramatically improves plan adherence — which is your #1 priority. <strong>Better adherence at slightly lower optimal profit beats perfect theory with poor execution every time.</strong></p>
+</div>
+
+<div class="content-section">
+    <h2>Trailing Stop Methods (Protecting Profits in Running Trades)</h2>
+    <p>A trailing stop moves your stop-loss in the direction of your trade as price moves in your favor, locking in profit while giving the trade room to continue. Here are the methods, from simplest to most advanced:</p>
+
+    <h3>Method 1: Swing Structure Trail (Recommended)</h3>
+    <p>Move your stop to just below the most recent swing low (for longs) or above the most recent swing high (for shorts) as new swings form.</p>
+    <div class="formula-block">
+        SWING TRAIL EXAMPLE (Long):<br>
+        Entry: 5,200 | Initial stop: 5,196<br><br>
+        Price rallies to 5,208, pulls back to 5,204 (new swing low), rallies again.<br>
+        → Move stop to 5,203.50 (just below the 5,204 swing low)<br><br>
+        Price rallies to 5,215, pulls back to 5,211, rallies again.<br>
+        → Move stop to 5,210.50 (just below the 5,211 swing low)<br><br>
+        Each new higher low = new trailing stop level.<br>
+        Your stop is always below structure — a logical level, not arbitrary.
+    </div>
+
+    <div class="diagram">
+        <svg viewBox="0 0 560 260" xmlns="http://www.w3.org/2000/svg" style="max-width:560px;width:100%">
+            <!-- Uptrend price line with swing highs and lows -->
+            <polyline points="40,210 70,190 100,160 120,140 140,170 155,175 170,165 190,130 220,100 240,120 255,130 270,115 290,80 320,55 340,75 355,85 370,70 390,40" fill="none" stroke="#e2e8f0" stroke-width="2" stroke-linejoin="round"/>
+
+            <!-- Entry point -->
+            <circle cx="40" cy="210" r="5" fill="#00d4aa"/>
+            <text x="40" y="230" fill="#00d4aa" text-anchor="middle" font-size="9" font-weight="600" font-family="sans-serif">Entry 5,200</text>
+
+            <!-- Swing Low 1 -->
+            <circle cx="155" cy="175" r="4" fill="#3b82f6"/>
+            <text x="155" y="195" fill="#3b82f6" text-anchor="middle" font-size="8" font-family="sans-serif">Swing Low 1</text>
+            <text x="155" y="206" fill="#3b82f6" text-anchor="middle" font-size="8" font-family="sans-serif">5,204</text>
+
+            <!-- Stop 1 line -->
+            <line x1="155" y1="182" x2="255" y2="182" stroke="#ff4757" stroke-width="1.5" stroke-dasharray="4,3"/>
+            <text x="260" y="186" fill="#ff4757" font-size="8" font-family="sans-serif">Stop &#x2192; 5,203.50</text>
+
+            <!-- Swing Low 2 -->
+            <circle cx="255" cy="130" r="4" fill="#3b82f6"/>
+            <text x="255" y="150" fill="#3b82f6" text-anchor="middle" font-size="8" font-family="sans-serif">Swing Low 2</text>
+            <text x="255" y="161" fill="#3b82f6" text-anchor="middle" font-size="8" font-family="sans-serif">5,211</text>
+
+            <!-- Stop 2 line -->
+            <line x1="255" y1="137" x2="355" y2="137" stroke="#ff4757" stroke-width="1.5" stroke-dasharray="4,3"/>
+            <text x="360" y="141" fill="#ff4757" font-size="8" font-family="sans-serif">Stop &#x2192; 5,210.50</text>
+
+            <!-- Swing Low 3 -->
+            <circle cx="355" cy="85" r="4" fill="#3b82f6"/>
+            <text x="355" y="105" fill="#3b82f6" text-anchor="middle" font-size="8" font-family="sans-serif">Swing Low 3</text>
+            <text x="355" y="116" fill="#3b82f6" text-anchor="middle" font-size="8" font-family="sans-serif">5,218</text>
+
+            <!-- Stop 3 line -->
+            <line x1="355" y1="92" x2="450" y2="92" stroke="#ff4757" stroke-width="1.5" stroke-dasharray="4,3"/>
+            <text x="455" y="96" fill="#ff4757" font-size="8" font-family="sans-serif">Stop &#x2192; 5,217.50</text>
+
+            <!-- Initial stop -->
+            <line x1="40" y1="225" x2="155" y2="225" stroke="#ff4757" stroke-width="1.5" stroke-dasharray="4,3"/>
+            <text x="160" y="229" fill="#ff4757" font-size="8" font-family="sans-serif">Initial Stop 5,196</text>
+
+            <!-- Arrows showing stop moving up -->
+            <path d="M 155,220 L 155,187" fill="none" stroke="#ffa502" stroke-width="1" marker-end="url(#arrowUp)"/>
+            <path d="M 255,177 L 255,142" fill="none" stroke="#ffa502" stroke-width="1" marker-end="url(#arrowUp)"/>
+            <path d="M 355,132 L 355,97" fill="none" stroke="#ffa502" stroke-width="1" marker-end="url(#arrowUp)"/>
+            <defs><marker id="arrowUp" viewBox="0 0 10 10" refX="5" refY="10" markerWidth="6" markerHeight="6" orient="auto"><path d="M 0 10 L 5 0 L 10 10" fill="#ffa502"/></marker></defs>
+
+            <text x="280" y="255" fill="#64748b" text-anchor="middle" font-size="10" font-style="italic" font-family="sans-serif">Swing Structure Trail: stop follows each new higher swing low</text>
+        </svg>
+    </div>
+
+    <p><strong>Why this works:</strong> In a healthy uptrend, price makes higher lows. Each higher low is a spot where buyers stepped in. Your stop sits just below where buyers are active. If that level breaks, the trend may actually be reversing — which is exactly when you want to exit.</p>
+
+    <h3>Method 2: EMA Trail</h3>
+    <p>Trail your stop below the 9 EMA (aggressive) or 21 EMA (conservative) on your trading timeframe.</p>
+    <ul>
+        <li><strong>9 EMA trail:</strong> Tight. Captures most of the move but gets stopped out on minor pullbacks. Best for strong, fast trends.</li>
+        <li><strong>21 EMA trail:</strong> Looser. Survives normal pullbacks but gives back more profit when the trend finally ends. Best for steady, sustained trends.</li>
+    </ul>
+    <p><strong>How:</strong> Every time a new 5-min candle closes, note the current 9 or 21 EMA value. If it's higher than your current stop (for longs), move your stop to 1-2 ticks below the EMA. Never move the stop backwards.</p>
+
+    <h3>Method 3: ATR Trail</h3>
+    <p>Set your trailing stop at a fixed ATR distance from the current price, updating as price moves.</p>
+    <div class="formula-block">
+        ATR TRAIL: Stop = Current Price - (1.5 × ATR)<br><br>
+        If 5-min ATR = 2 points on MES, your trail distance = 3 points.<br>
+        Price at 5,210 → Stop at 5,207<br>
+        Price moves to 5,215 → Stop moves to 5,212<br>
+        Price pulls back to 5,213 → Stop stays at 5,212 (never moves backward)
+    </div>
+
+    <h3>Which Method to Use?</h3>
+    <table class="data-table">
+        <thead>
+            <tr><th>Market Condition</th><th>Best Trail Method</th><th>Why</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>Strong, fast trend (big candles, strong $TICK)</td><td>9 EMA trail</td><td>Price is running — stay close to capture maximum profit</td></tr>
+            <tr><td>Steady trend with pullbacks</td><td>Swing structure trail</td><td>Gives room for natural pullbacks while protecting structural levels</td></tr>
+            <tr><td>Slow grind with volatility</td><td>ATR trail or 21 EMA</td><td>Wider trail absorbs noise without getting shaken out</td></tr>
+            <tr><td>Unsure / beginner</td><td>Half-off + break-even</td><td>Simplest. Take half off at 1:1, trail remainder with any method above</td></tr>
+        </tbody>
+    </table>
 </div>
 
 <div class="info-box tip">
@@ -2514,6 +3243,48 @@ module15: `
     </ol>
 </div>
 
+<div class="content-section">
+    <h2>Recommended Resources — Where to Go From Here</h2>
+    <p>This course covers the complete foundation. But trading is a lifelong learning process. Here are the best resources, organized by category, vetted for quality and no-BS content.</p>
+
+    <h3>Books (In Reading Order)</h3>
+    <table class="data-table">
+        <thead>
+            <tr><th>Book</th><th>Author</th><th>Why Read It</th><th>When to Read</th></tr>
+        </thead>
+        <tbody>
+            <tr><td><strong>Trading in the Zone</strong></td><td>Mark Douglas</td><td>The definitive book on trading psychology. Teaches probabilistic thinking — the mindset shift that separates profitable traders from gamblers. Every concept in Module 12 traces back to this book.</td><td>Before you start sim trading</td></tr>
+            <tr><td><strong>Reminiscences of a Stock Operator</strong></td><td>Edwin Lefèvre</td><td>The biography of Jesse Livermore, one of the greatest traders in history. Written in 1923, still the best book on market speculation. You'll recognize every emotional trap in your own trading.</td><td>During sim trading</td></tr>
+            <tr><td><strong>The Daily Trading Coach</strong></td><td>Brett Steenbarger</td><td>101 practical exercises for improving trading performance. Written by a psychologist who works with professional traders. Practical, not theoretical.</td><td>When you're struggling with discipline</td></tr>
+            <tr><td><strong>Mind Over Markets</strong></td><td>James Dalton</td><td>The original Market Profile / auction theory book. Explains how to read where institutions are buying and selling using volume distribution. Advanced — directly builds on Module 8.</td><td>After 3+ months of trading</td></tr>
+            <tr><td><strong>Markets in Profile</strong></td><td>James Dalton</td><td>The updated sequel to Mind Over Markets. Covers how to identify trending vs. balanced markets using profile shapes. Essential for understanding daily market types.</td><td>After Mind Over Markets</td></tr>
+            <tr><td><strong>Order Flow Trading for Fun and Profit</strong></td><td>Daemon Goldsmith</td><td>Practical guide to reading the DOM, footprint charts, and order flow. Directly applicable to ES/NQ trading. Short, actionable, no filler.</td><td>After 6+ months when you want to add order flow</td></tr>
+        </tbody>
+    </table>
+
+    <h3>Free Educational Resources</h3>
+    <ul>
+        <li><strong>CME Group Education (cmegroup.com/education)</strong> — Free courses directly from the exchange. Covers contract specs, margin, options on futures, and more. The most authoritative source — they literally run the exchange.</li>
+        <li><strong>TradingView's Paper Trading</strong> — Free simulated trading with real-time data. Use it alongside the Replay Mode for practice.</li>
+        <li><strong>Investopedia Futures Section</strong> — Good reference for definitions and concepts. Not a strategy resource but solid for fundamentals.</li>
+        <li><strong>CFTC Commitment of Traders Report (COT)</strong> — Weekly report showing how institutions, hedgers, and speculators are positioned. Available free at cftc.gov. Useful for weekly bias (not intraday).</li>
+    </ul>
+
+    <h3>What to Avoid</h3>
+    <div class="info-box warning">
+        <div class="box-title">Red Flags in Trading Education</div>
+        <p>The trading education industry is full of scams. Protect yourself:</p>
+        <ul>
+            <li><strong>Avoid anyone selling "signals" or "copy trading."</strong> If their strategy worked, they'd trade it themselves — the revenue from a working strategy dwarfs what they'd make selling subscriptions.</li>
+            <li><strong>Avoid courses costing $500+.</strong> Everything you need to learn is in books under $30 or free online. Expensive courses are marketing operations, not education.</li>
+            <li><strong>Avoid anyone showing only winning trades.</strong> If they won't show their full trade history with losses, they're cherry-picking. Ask for verified broker statements.</li>
+            <li><strong>Avoid "guaranteed" returns.</strong> No strategy works 100% of the time. Anyone promising guaranteed profits is either lying or doesn't understand probability.</li>
+            <li><strong>Avoid Discord/Telegram groups charging monthly fees.</strong> Most are running a "guru" model where the real revenue is your subscription, not trading profits.</li>
+        </ul>
+        <p><strong>The best education is: read the books, practice on replay, practice on sim, review your journal, repeat.</strong> You don't need a guru. You need discipline and screen time.</p>
+    </div>
+</div>
+
 <button class="module-complete-btn" onclick="completeModule('module15')">Mark Module 15 Complete ✓</button>
 <div class="btn-group">
     <button class="btn btn-secondary" onclick="navigateTo('module14')">← Module 14</button>
@@ -2534,26 +3305,35 @@ glossary: `
 
 <div id="glossaryList">
     <dl>
+        <div class="glossary-item" data-term="absorption"><dt>Absorption</dt><dd>When large resting limit orders absorb aggressive market orders without price moving. Visible as high volume candles with small bodies. Often precedes a reversal as the absorbing side overwhelms the aggressors.</dd></div>
         <div class="glossary-item" data-term="ask"><dt>Ask (Offer)</dt><dd>The lowest price a seller is willing to accept. You buy at the ask price.</dd></div>
         <div class="glossary-item" data-term="atr"><dt>ATR (Average True Range)</dt><dd>An indicator measuring average price range over a period (typically 14). Used to gauge volatility and set stop-loss distances.</dd></div>
+        <div class="glossary-item" data-term="backtest"><dt>Backtest</dt><dd>Testing a trading strategy on historical data to evaluate its performance. TradingView's Replay Mode allows manual backtesting. Minimum 50 trades needed for statistical significance.</dd></div>
         <div class="glossary-item" data-term="bid"><dt>Bid</dt><dd>The highest price a buyer is willing to pay. You sell at the bid price.</dd></div>
+        <div class="glossary-item" data-term="bracket order"><dt>Bracket Order (OCO)</dt><dd>An order type that places entry, stop-loss, and profit target simultaneously. When one exit triggers, the other cancels automatically. Ensures you're never in a position without a stop.</dd></div>
         <div class="glossary-item" data-term="breakout"><dt>Breakout</dt><dd>When price moves beyond a defined support or resistance level. Valid breakouts are confirmed by above-average volume.</dd></div>
-        <div class="glossary-item" data-term="circuit breaker"><dt>Circuit Breaker</dt><dd>CME-mandated trading halts triggered when the S&P 500 drops 7% (Level 1), 13% (Level 2), or 20% (Level 3) from the prior close. Overnight limits are ±5%.</dd></div>
         <div class="glossary-item" data-term="candlestick"><dt>Candlestick</dt><dd>A chart element showing open, high, low, and close prices for a specific time period. Green/white = close above open (bullish). Red = close below open (bearish).</dd></div>
+        <div class="glossary-item" data-term="circuit breaker"><dt>Circuit Breaker</dt><dd>CME-mandated trading halts triggered when the S&P 500 drops 7% (Level 1), 13% (Level 2), or 20% (Level 3) from the prior close. Overnight limits are ±5%.</dd></div>
         <div class="glossary-item" data-term="cme"><dt>CME Group</dt><dd>Chicago Mercantile Exchange. The world's largest futures exchange. Operates CME, CBOT, NYMEX, and COMEX. All ES/MES/NQ/MNQ contracts trade on CME.</dd></div>
         <div class="glossary-item" data-term="commission"><dt>Commission</dt><dd>Fee charged by your broker per contract per side (entry and exit). Ranges from $0.09 to $2.50+ per side depending on broker and contract.</dd></div>
         <div class="glossary-item" data-term="contract"><dt>Contract</dt><dd>The standardized unit you trade. 1 ES contract = $50/point. 1 MES contract = $5/point. You buy or sell contracts, not shares.</dd></div>
+        <div class="glossary-item" data-term="correlation"><dt>Correlation</dt><dd>The degree to which two instruments move together. ES and NQ have ~85-90% daily correlation. When correlated instruments diverge, it often signals a potential reversal.</dd></div>
         <div class="glossary-item" data-term="cpi"><dt>CPI (Consumer Price Index)</dt><dd>A monthly report measuring the average change in prices paid by consumers for goods and services (food, gas, rent, clothing). The primary inflation gauge. Released at 8:30 AM ET. Higher-than-expected CPI is typically bearish for stocks (implies rate hikes). One of the highest-impact market events.</dd></div>
+        <div class="glossary-item" data-term="delta"><dt>Delta</dt><dd>The difference between aggressive buy volume and aggressive sell volume at a price or candle. Positive delta = more buying aggression. Negative delta = more selling aggression. Delta divergence from price is a reversal signal.</dd></div>
         <div class="glossary-item" data-term="dom"><dt>DOM (Depth of Market)</dt><dd>A display showing the order book — pending buy and sell orders at each price level. Also called Level 2 or the ladder.</dd></div>
         <div class="glossary-item" data-term="drawdown"><dt>Drawdown</dt><dd>The peak-to-trough decline in your account balance. A $10,000 account that drops to $8,500 has a $1,500 (15%) drawdown.</dd></div>
         <div class="glossary-item" data-term="ema"><dt>EMA (Exponential Moving Average)</dt><dd>A moving average giving more weight to recent prices. Common settings: 9 EMA (fast) and 21 EMA (slow).</dd></div>
         <div class="glossary-item" data-term="es"><dt>ES (E-mini S&P 500)</dt><dd>The most liquid futures contract in the world. Tracks the S&P 500 index. $50 per point, $12.50 per tick. Minimum tick = 0.25 points.</dd></div>
         <div class="glossary-item" data-term="exchange fees"><dt>Exchange Fees</dt><dd>Fees charged by the CME exchange on top of your broker's commission. For MES: ~$0.62/side. For ES: ~$1.28/side. Plus NFA regulatory fees (~$0.02/side). These are unavoidable.</dd></div>
+        <div class="glossary-item" data-term="fibonacci"><dt>Fibonacci Retracement</dt><dd>A tool that plots horizontal lines at key Fibonacci ratios (38.2%, 50%, 61.8%) between a swing high and low. Used to identify potential pullback levels. Most powerful when confluent with other S/R.</dd></div>
         <div class="glossary-item" data-term="fill"><dt>Fill</dt><dd>When your order is executed (matched with a counterparty). A "filled" order means you are now in a position.</dd></div>
-        <div class="glossary-item" data-term="funded account"><dt>Funded Account</dt><dd>A trading account provided by a prop firm after passing their evaluation. You trade the firm's capital and keep 80-100% of profits. Your risk is limited to the monthly evaluation fee.</dd></div>
         <div class="glossary-item" data-term="fomc"><dt>FOMC</dt><dd>Federal Open Market Committee. Sets US interest rates 8 times per year. FOMC announcements cause the largest intraday moves in ES.</dd></div>
-        <div class="glossary-item" data-term="gap"><dt>Gap</dt><dd>When the opening price is significantly different from the previous close. Caused by overnight news or economic data.</dd></div>
+        <div class="glossary-item" data-term="form 6781"><dt>Form 6781</dt><dd>IRS tax form for reporting gains/losses on Section 1256 contracts (futures). Enables the 60/40 tax treatment and 3-year loss carryback.</dd></div>
+        <div class="glossary-item" data-term="funded account"><dt>Funded Account</dt><dd>A trading account provided by a prop firm after passing their evaluation. You trade the firm's capital and keep 80-100% of profits. Your risk is limited to the monthly evaluation fee.</dd></div>
+        <div class="glossary-item" data-term="gap"><dt>Gap</dt><dd>When the opening price is significantly different from the previous close. Caused by overnight news or economic data. Small gaps (&lt;0.5%) tend to fill ~70% of the time. Large gaps (&gt;1%) often continue ("gap and go").</dd></div>
+        <div class="glossary-item" data-term="gap fill"><dt>Gap Fill</dt><dd>When price returns to the prior day's closing price after opening with a gap. A tradeable pattern for small, non-news-driven gaps. Also called "closing the gap."</dd></div>
         <div class="glossary-item" data-term="gdp"><dt>GDP (Gross Domestic Product)</dt><dd>The total value of all goods and services produced by a country over a period. The broadest measure of economic health. Released quarterly at 8:30 AM ET (advance, preliminary, final estimates). Positive GDP = growing economy, typically bullish. Negative GDP = contraction, typically bearish.</dd></div>
+        <div class="glossary-item" data-term="initial balance"><dt>Initial Balance (IB)</dt><dd>The price range established during the first 30-60 minutes of the trading session. IB High and IB Low become key S/R levels. Narrow IB = trending day likely. Wide IB = range day likely.</dd></div>
         <div class="glossary-item" data-term="leverage"><dt>Leverage</dt><dd>Using margin to control a position larger than your account balance. 20:1 leverage means $1 of margin controls $20 of asset value. Amplifies both gains and losses.</dd></div>
         <div class="glossary-item" data-term="limit order"><dt>Limit Order</dt><dd>An order to buy or sell at a specific price or better. Guarantees price but not execution.</dd></div>
         <div class="glossary-item" data-term="liquidity"><dt>Liquidity</dt><dd>How easily you can buy or sell without affecting the price. High liquidity = tight spreads, fast fills. ES and MES are extremely liquid during US hours.</dd></div>
@@ -2561,44 +3341,41 @@ glossary: `
         <div class="glossary-item" data-term="margin"><dt>Margin</dt><dd>A performance bond (security deposit) required to hold a futures position. Day trade margin is lower than overnight margin.</dd></div>
         <div class="glossary-item" data-term="margin call"><dt>Margin Call</dt><dd>A demand from your broker to deposit more funds because your account equity has fallen below the maintenance margin requirement.</dd></div>
         <div class="glossary-item" data-term="market order"><dt>Market Order</dt><dd>An order to buy or sell immediately at the best available price. Guarantees execution but not price.</dd></div>
+        <div class="glossary-item" data-term="market profile"><dt>Market Profile</dt><dd>A charting technique that organizes price data by time spent at each level (TPO — Time Price Opportunity). Shows the "bell curve" of where price spent the most time, revealing value areas and balance/imbalance.</dd></div>
         <div class="glossary-item" data-term="mes"><dt>MES (Micro E-mini S&P 500)</dt><dd>A 1/10th size version of the ES contract. $5 per point, $1.25 per tick. Ideal for beginners and small accounts.</dd></div>
         <div class="glossary-item" data-term="nfp"><dt>NFP (Non-Farm Payrolls)</dt><dd>A monthly US labor report showing how many jobs were added or lost (excluding farms). Released the first Friday of each month at 8:30 AM ET. One of the highest-impact reports. Strong NFP = strong economy but potential rate hikes. Can move ES 30-80+ points in seconds.</dd></div>
         <div class="glossary-item" data-term="nq"><dt>NQ (E-mini Nasdaq 100)</dt><dd>Futures contract tracking the Nasdaq 100 index. $20 per point, $5 per tick. More volatile than ES.</dd></div>
         <div class="glossary-item" data-term="pce"><dt>PCE (Personal Consumption Expenditures)</dt><dd>A monthly inflation measure tracking changes in the prices of goods and services purchased by consumers. The Federal Reserve's PREFERRED inflation indicator (they watch PCE more than CPI). Released at 8:30 AM ET. A surprise PCE reading can move markets as much as CPI.</dd></div>
+        <div class="glossary-item" data-term="poc"><dt>POC (Point of Control)</dt><dd>The price level with the highest traded volume on a Volume Profile. Acts as a magnet — price tends to return to POC. Strong S/R level for the next session.</dd></div>
         <div class="glossary-item" data-term="point"><dt>Point</dt><dd>One full unit of price movement. On ES, 1 point = 4 ticks = $50. On MES, 1 point = 4 ticks = $5.</dd></div>
-        <div class="glossary-item" data-term="ppi"><dt>PPI (Producer Price Index)</dt><dd>A monthly report measuring the average change in selling prices received by domestic producers. A leading indicator for CPI — if producers pay more, consumers eventually pay more too. Released at 8:30 AM ET. Market reaction similar to CPI but typically slightly less volatile.</dd></div>
-        <div class="glossary-item" data-term="rollover"><dt>Rollover</dt><dd>The process of closing a position in an expiring contract and opening the same position in the next quarterly contract. ES/MES/NQ/MNQ contracts expire quarterly (March, June, September, December). Roll 5-8 days before expiration when volume shifts to the new contract.</dd></div>
         <div class="glossary-item" data-term="position sizing"><dt>Position Sizing</dt><dd>Calculating how many contracts to trade based on your account size, risk per trade, and stop-loss distance.</dd></div>
+        <div class="glossary-item" data-term="ppi"><dt>PPI (Producer Price Index)</dt><dd>A monthly report measuring the average change in selling prices received by domestic producers. A leading indicator for CPI — if producers pay more, consumers eventually pay more too. Released at 8:30 AM ET. Market reaction similar to CPI but typically slightly less volatile.</dd></div>
         <div class="glossary-item" data-term="prop firm"><dt>Prop Firm (Proprietary Trading Firm)</dt><dd>A company that provides trading capital to traders who pass an evaluation. Trader keeps 80-90% of profits. Examples: Apex, Topstep.</dd></div>
         <div class="glossary-item" data-term="resistance"><dt>Resistance</dt><dd>A price level where selling pressure historically prevents further upward movement. Acts as a ceiling.</dd></div>
-        <div class="glossary-item" data-term="rsi"><dt>RSI (Relative Strength Index)</dt><dd>Momentum oscillator measuring speed of price changes. Ranges 0-100. Above 70 = overbought, below 30 = oversold. Best used for divergence signals.</dd></div>
+        <div class="glossary-item" data-term="rollover"><dt>Rollover</dt><dd>The process of closing a position in an expiring contract and opening the same position in the next quarterly contract. ES/MES/NQ/MNQ contracts expire quarterly (March, June, September, December). Roll 5-8 days before expiration when volume shifts to the new contract.</dd></div>
         <div class="glossary-item" data-term="rr"><dt>R:R (Risk-to-Reward Ratio)</dt><dd>The ratio of potential loss to potential gain on a trade. A 2:1 R:R means you stand to gain $2 for every $1 risked.</dd></div>
+        <div class="glossary-item" data-term="rsi"><dt>RSI (Relative Strength Index)</dt><dd>Momentum oscillator measuring speed of price changes. Ranges 0-100. Above 70 = overbought, below 30 = oversold. Best used for divergence signals.</dd></div>
         <div class="glossary-item" data-term="scalp"><dt>Scalp</dt><dd>A very short-term trade lasting seconds to minutes, targeting small price moves (2-10 ticks). Requires fast execution and tight spreads.</dd></div>
+        <div class="glossary-item" data-term="section 1256"><dt>Section 1256</dt><dd>IRS tax code section governing futures contracts. Provides 60/40 tax treatment (60% long-term, 40% short-term rates), mark-to-market at year-end, and 3-year loss carryback. Significant advantage over stock trading taxes.</dd></div>
         <div class="glossary-item" data-term="short"><dt>Short</dt><dd>A position that profits when price goes DOWN. You enter by selling, exit by buying.</dd></div>
         <div class="glossary-item" data-term="slippage"><dt>Slippage</dt><dd>The difference between your expected fill price and your actual fill price. Common during fast markets and news events.</dd></div>
         <div class="glossary-item" data-term="spread"><dt>Spread</dt><dd>The difference between the bid and ask price. On ES during US hours, the spread is typically 1 tick (0.25 points = $12.50).</dd></div>
         <div class="glossary-item" data-term="stop loss"><dt>Stop Loss</dt><dd>An order that automatically closes your position at a predetermined loss level. Non-negotiable for every trade.</dd></div>
         <div class="glossary-item" data-term="support"><dt>Support</dt><dd>A price level where buying pressure historically prevents further downward movement. Acts as a floor.</dd></div>
-        <div class="glossary-item" data-term="tick"><dt>Tick</dt><dd>The minimum price increment. On ES/MES/NQ/MNQ, one tick = 0.25 points.</dd></div>
-        <div class="glossary-item" data-term="tradingview"><dt>TradingView</dt><dd>A web-based charting platform (tradingview.com) used by millions of traders. Offers free and paid plans, broker integration (Tradovate, AMP), alerts, replay mode, and an economic calendar. The standard tool for chart analysis.</dd></div>
-        <div class="glossary-item" data-term="trend"><dt>Trend</dt><dd>Sustained directional price movement. Uptrend = higher highs + higher lows. Downtrend = lower highs + lower lows.</dd></div>
-        <div class="glossary-item" data-term="volume"><dt>Volume</dt><dd>The number of contracts traded in a given period. High volume = strong conviction. Low volume = weak, unreliable moves.</dd></div>
-        <div class="glossary-item" data-term="vwap"><dt>VWAP (Volume Weighted Average Price)</dt><dd>The average price weighted by volume for the day. Institutional benchmark. Price above VWAP = bullish bias, below = bearish.</dd></div>
-        <div class="glossary-item" data-term="absorption"><dt>Absorption</dt><dd>When large resting limit orders absorb aggressive market orders without price moving. Visible as high volume candles with small bodies. Often precedes a reversal as the absorbing side overwhelms the aggressors.</dd></div>
-        <div class="glossary-item" data-term="backtest"><dt>Backtest</dt><dd>Testing a trading strategy on historical data to evaluate its performance. TradingView's Replay Mode allows manual backtesting. Minimum 50 trades needed for statistical significance.</dd></div>
-        <div class="glossary-item" data-term="correlation"><dt>Correlation</dt><dd>The degree to which two instruments move together. ES and NQ have ~85-90% daily correlation. When correlated instruments diverge, it often signals a potential reversal.</dd></div>
-        <div class="glossary-item" data-term="delta"><dt>Delta</dt><dd>The difference between aggressive buy volume and aggressive sell volume at a price or candle. Positive delta = more buying aggression. Negative delta = more selling aggression. Delta divergence from price is a reversal signal.</dd></div>
-        <div class="glossary-item" data-term="fibonacci"><dt>Fibonacci Retracement</dt><dd>A tool that plots horizontal lines at key Fibonacci ratios (38.2%, 50%, 61.8%) between a swing high and low. Used to identify potential pullback levels. Most powerful when confluent with other S/R.</dd></div>
-        <div class="glossary-item" data-term="form 6781"><dt>Form 6781</dt><dd>IRS tax form for reporting gains/losses on Section 1256 contracts (futures). Enables the 60/40 tax treatment and 3-year loss carryback.</dd></div>
-        <div class="glossary-item" data-term="initial balance"><dt>Initial Balance (IB)</dt><dd>The price range established during the first 30-60 minutes of the trading session. IB High and IB Low become key S/R levels. Narrow IB = trending day likely. Wide IB = range day likely.</dd></div>
-        <div class="glossary-item" data-term="market profile"><dt>Market Profile</dt><dd>A charting technique that organizes price data by time spent at each level (TPO — Time Price Opportunity). Shows the "bell curve" of where price spent the most time, revealing value areas and balance/imbalance.</dd></div>
-        <div class="glossary-item" data-term="poc"><dt>POC (Point of Control)</dt><dd>The price level with the highest traded volume on a Volume Profile. Acts as a magnet — price tends to return to POC. Strong S/R level for the next session.</dd></div>
-        <div class="glossary-item" data-term="section 1256"><dt>Section 1256</dt><dd>IRS tax code section governing futures contracts. Provides 60/40 tax treatment (60% long-term, 40% short-term rates), mark-to-market at year-end, and 3-year loss carryback. Significant advantage over stock trading taxes.</dd></div>
         <div class="glossary-item" data-term="sweep"><dt>Sweep</dt><dd>When price quickly moves through multiple price levels, taking out resting orders at each level. Sweeps of highs/lows often indicate stop-hunting before a reversal.</dd></div>
+        <div class="glossary-item" data-term="tick"><dt>Tick</dt><dd>The minimum price increment. On ES/MES/NQ/MNQ, one tick = 0.25 points.</dd></div>
+        <div class="glossary-item" data-term="tick chart"><dt>Tick Chart</dt><dd>A chart type that creates a new bar after a fixed number of trades (not a fixed time period). Adapts to market activity — more bars during high volume, fewer during slow periods. Common: 500-tick, 1000-tick, 2000-tick.</dd></div>
+        <div class="glossary-item" data-term="tick index"><dt>$TICK (NYSE Tick Index)</dt><dd>A market breadth indicator measuring (stocks ticking up) minus (stocks ticking down) on the NYSE. Ranges typically -500 to +500. Extremes beyond ±1000 signal broad institutional buying/selling. Used as a trade filter for ES.</dd></div>
         <div class="glossary-item" data-term="tilt"><dt>Tilt</dt><dd>A state of emotional frustration causing irrational trading decisions. Named after the poker term. Symptoms: increasing position size, ignoring stops, revenge trading, abandoning your plan. Fix: walk away immediately.</dd></div>
         <div class="glossary-item" data-term="time and sales"><dt>Time and Sales (Tape)</dt><dd>A real-time feed showing every trade that occurs — price, size, and whether it was at the bid (sell) or ask (buy). The "tape" is the raw data of market activity. Reading it is called "tape reading."</dd></div>
+        <div class="glossary-item" data-term="tradingview"><dt>TradingView</dt><dd>A web-based charting platform (tradingview.com) used by millions of traders. Offers free and paid plans, broker integration (Tradovate, AMP), alerts, replay mode, and an economic calendar. The standard tool for chart analysis.</dd></div>
+        <div class="glossary-item" data-term="trailing stop"><dt>Trailing Stop</dt><dd>A stop-loss that moves in the direction of your trade as price moves favorably, locking in profit. Methods: swing structure trail, EMA trail, ATR trail, or fixed-distance. Never moves backward — only forward.</dd></div>
+        <div class="glossary-item" data-term="trend"><dt>Trend</dt><dd>Sustained directional price movement. Uptrend = higher highs + higher lows. Downtrend = lower highs + lower lows.</dd></div>
         <div class="glossary-item" data-term="value area"><dt>Value Area</dt><dd>The price range containing approximately 70% of a session's traded volume. Defined by VAH (Value Area High) and VAL (Value Area Low). If price opens inside the prior session's VA, expect range-bound action.</dd></div>
+        <div class="glossary-item" data-term="vix"><dt>VIX (Volatility Index)</dt><dd>The CBOE Volatility Index measuring expected S&P 500 volatility over 30 days. Called the "fear gauge." Below 15 = calm. 15-25 = normal. 25-35 = elevated fear. Above 35 = panic. Moves inversely to ES ~80% of the time.</dd></div>
+        <div class="glossary-item" data-term="volume"><dt>Volume</dt><dd>The number of contracts traded in a given period. High volume = strong conviction. Low volume = weak, unreliable moves.</dd></div>
         <div class="glossary-item" data-term="volume profile"><dt>Volume Profile</dt><dd>A charting tool that displays volume traded at each price level as horizontal bars. Unlike traditional volume (which shows volume per time period), Volume Profile shows WHERE the trading happened. Reveals HVN (high volume nodes) and LVN (low volume nodes).</dd></div>
+        <div class="glossary-item" data-term="vwap"><dt>VWAP (Volume Weighted Average Price)</dt><dd>The average price weighted by volume for the day. Institutional benchmark. Price above VWAP = bullish bias, below = bearish.</dd></div>
     </dl>
 </div>
 `,
@@ -2694,7 +3471,7 @@ calculator: `
 quiz: `
 <div class="module-header">
     <h1>Knowledge Quiz</h1>
-    <p class="subtitle">Test what you've learned. 25 questions covering all modules. 80%+ means you're ready for sim.</p>
+    <p class="subtitle">Test what you've learned. 30 questions covering all modules. 80%+ means you're ready for sim.</p>
 </div>
 
 <div id="quizContainer"></div>

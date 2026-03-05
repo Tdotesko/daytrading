@@ -1,0 +1,17 @@
+{
+  "name": "DayTrade Futures Academy",
+  "short_name": "DayTrade",
+  "description": "Free futures day trading course — learn ES, MES, NQ, MNQ from zero.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#0a0e17",
+  "theme_color": "#00d4aa",
+  "icons": [
+    {
+      "src": "icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

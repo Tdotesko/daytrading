@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Free futures day trading course. Learn to trade ES, MES, NQ, MNQ from zero. Fact-based curriculum with position calculators, trade journal, and 25-question knowledge quiz.">
+    <meta name="theme-color" content="#00d4aa">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="icons/icon.svg">
+    <title>DayTrade Futures Academy</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/modules.css">
+</head>
+<body>
+    <nav id="sidebar">
+        <div class="logo">
+            <h2>DayTrade<span>Academy</span></h2>
+            <p class="tagline">Futures Trading From Zero</p>
+        </div>
+        <div class="progress-bar-container">
+            <div class="progress-bar" id="globalProgress">
+                <div class="progress-fill" style="width: 0%"></div>
+            </div>
+            <span class="progress-text" id="globalProgressText">0% Complete</span>
+        </div>
+        <ul class="nav-menu" id="navMenu">
+            <li class="nav-item active" data-module="welcome">
+                <span class="nav-icon">🏠</span> Welcome
+            </li>
+            <li class="nav-section">PHASE 0: BEFORE YOU BEGIN</li>
+            <li class="nav-item" data-module="module0">
+                <span class="nav-icon">🧭</span> The Absolute Basics
+                <span class="check" id="check-module0"></span>
+            </li>
+            <li class="nav-section">PHASE 1: FOUNDATIONS</li>
+            <li class="nav-item" data-module="module1">
+                <span class="nav-icon">📘</span> What Are Futures?
+                <span class="check" id="check-module1"></span>
+            </li>
+            <li class="nav-item" data-module="module2">
+                <span class="nav-icon">📊</span> Market Structure
+                <span class="check" id="check-module2"></span>
+            </li>
+            <li class="nav-item" data-module="module3">
+                <span class="nav-icon">💰</span> Contracts & Margin
+                <span class="check" id="check-module3"></span>
+            </li>
+            <li class="nav-item" data-module="module4">
+                <span class="nav-icon">🖥️</span> Broker & Platform Setup
+                <span class="check" id="check-module4"></span>
+            </li>
+            <li class="nav-section">PHASE 2: READING THE MARKET</li>
+            <li class="nav-item" data-module="module5">
+                <span class="nav-icon">🕯️</span> Candlestick Charts
+                <span class="check" id="check-module5"></span>
+            </li>
+            <li class="nav-item" data-module="module6">
+                <span class="nav-icon">📈</span> Support & Resistance
+                <span class="check" id="check-module6"></span>
+            </li>
+            <li class="nav-item" data-module="module7">
+                <span class="nav-icon">📉</span> Key Indicators
+                <span class="check" id="check-module7"></span>
+            </li>
+            <li class="nav-item" data-module="module8">
+                <span class="nav-icon">📦</span> Volume & Order Flow
+                <span class="check" id="check-module8"></span>
+            </li>
+            <li class="nav-section">PHASE 3: STRATEGY</li>
+            <li class="nav-item" data-module="module9">
+                <span class="nav-icon">🎯</span> Trade Setups
+                <span class="check" id="check-module9"></span>
+            </li>
+            <li class="nav-item" data-module="module10">
+                <span class="nav-icon">🛡️</span> Risk Management
+                <span class="check" id="check-module10"></span>
+            </li>
+            <li class="nav-item" data-module="module11">
+                <span class="nav-icon">📋</span> Trading Plan
+                <span class="check" id="check-module11"></span>
+            </li>
+            <li class="nav-item" data-module="module12">
+                <span class="nav-icon">🧠</span> Psychology
+                <span class="check" id="check-module12"></span>
+            </li>
+            <li class="nav-section">PHASE 4: GO LIVE</li>
+            <li class="nav-item" data-module="module13">
+                <span class="nav-icon">🎮</span> Sim Trading Guide
+                <span class="check" id="check-module13"></span>
+            </li>
+            <li class="nav-item" data-module="module14">
+                <span class="nav-icon">🚀</span> Going Live Checklist
+                <span class="check" id="check-module14"></span>
+            </li>
+            <li class="nav-item" data-module="module15">
+                <span class="nav-icon">📓</span> Trade Journal
+                <span class="check" id="check-module15"></span>
+            </li>
+            <li class="nav-section">TOOLS</li>
+            <li class="nav-item" data-module="glossary">
+                <span class="nav-icon">📖</span> Glossary
+            </li>
+            <li class="nav-item" data-module="calculator">
+                <span class="nav-icon">🧮</span> Position Calculator
+            </li>
+            <li class="nav-item" data-module="quiz">
+                <span class="nav-icon">✅</span> Knowledge Quiz
+            </li>
+        </ul>
+    </nav>
+
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+    <main id="content">
+        <button id="menuToggle" class="menu-toggle" aria-label="Toggle navigation menu">☰</button>
+        <div id="moduleContent">
+            <!-- Dynamic content loaded here -->
+        </div>
+    </main>
+
+    <noscript>
+        <div style="padding: 40px; text-align: center; color: #e2e8f0; background: #0a0e17; min-height: 100vh; font-family: sans-serif;">
+            <h1>DayTrade Academy requires JavaScript</h1>
+            <p>Please enable JavaScript in your browser settings to use this application.</p>
+        </div>
+    </noscript>
+    <script src="js/content.js"></script>
+    <script src="js/quiz.js"></script>
+    <script src="js/calculator.js"></script>
+    <script src="js/app.js"></script>
+    <script>
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('./sw.js');
+      }
+    </script>
+</body>
+</html>

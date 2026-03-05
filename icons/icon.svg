@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" rx="64" fill="#0a0e17"/>
+  <text x="256" y="200" text-anchor="middle" font-family="Arial,sans-serif" font-weight="800" font-size="120" fill="#e2e8f0">DT</text>
+  <polyline points="80,380 180,300 260,340 360,240 440,280" fill="none" stroke="#00d4aa" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="440" cy="280" r="12" fill="#00d4aa"/>
+</svg>
